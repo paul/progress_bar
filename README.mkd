@@ -1,0 +1,67 @@
+
+# ProgressBar
+
+*ProgressBar* is a simple Ruby library for displaying progress of
+long-running tasks on the console. It is intended to be easy to use
+first, and configurable for additional needs.
+
+# Installation
+
+    gem install progress_bar
+
+# Examples
+
+## The Easy Way
+
+
+    require 'progress_bar'
+    bar = ProgressBar.new
+
+    100.times do
+      sleep 0.1
+      bar.increment!
+    end
+
+Produces output like:
+
+    [#######################################                           ] [ 59.00%] [00:06]
+
+*Note: It may not be exactly like this. I might have changed the default
+meters between now and when I wrote this readme, and forgotten to update
+it.*
+
+## Setting the Max
+
+Usually, the defaults should be fine, the only thing you'll need to
+tweak is the max.
+
+    bar = ProgressBar.new(1000)
+
+## Larger Steps
+
+If you want to process several things, and update less often, you can
+pass a number to `#increment!`
+
+    bar.increment! 42
+
+## The Configurable Way
+
+    bar = ProgressBar.new do |cfg|
+      cfg.width = 60
+      cfg.max   = 1000
+      cfg.color = true
+      cfg.meters = [:bar, :eta]
+
+      cfg.bar.width = 40
+      cfg.bar.fill = '#'
+      cfg.bar.empty = ' '
+      cfg.bar.prefix = '['
+      cfg.bar.suffix = ']'
+
+      cfg.eta.format = "%H:%M:%S"
+    end
+
+
+
+
+
