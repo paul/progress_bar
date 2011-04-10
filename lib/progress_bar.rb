@@ -6,13 +6,13 @@ class ProgressBar
 
   attr_accessor :count, :max, :start, :meters
 
-  def initialize(max = 100, meters = :all)
+  def initialize(max = 100, *meters)
 
     @count  = 0
     @max    = max
     @start  = Time.now
 
-    if meters == :all
+    if meters.empty?
       @meters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
     else
       @meters = meters
@@ -56,7 +56,11 @@ class ProgressBar
   end
 
   def eta
-    remaining / rate
+    if count > 0
+      remaining / rate
+    else
+      0
+    end
   end
 
   def to_s
@@ -66,6 +70,10 @@ class ProgressBar
   end
 
   protected
+
+  def print(str)
+    $stderr.write str
+  end
 
   def clear!
     print "\r"
@@ -87,11 +95,11 @@ class ProgressBar
   end
 
   def render_counter
-    "[%#{max.to_s.length}i/%i]" % [count, max]
+    "[%#{max_width}i/%i]" % [count, max]
   end
 
   def render_percentage
-    format = (max % 10 == 0 ? "%3i" : "%6.2f")
+    format = (max == 100 ? "%3i" : "%6.2f")
     "[#{format}%%]" % percentage
   end
 
@@ -104,7 +112,7 @@ class ProgressBar
   end
 
   def render_rate
-    "[%.2f/s]" % rate
+    "[%#{max_width+3}.2f/s]" % rate
   end
 
   def terminal_width
@@ -122,13 +130,13 @@ class ProgressBar
   end
 
   def counter_width   # [  1/100]
-    max.to_s.length * 2 + 3
+    max_width * 2 + 3
   end
 
   def percentage_width
-    if max == 100     # [ 24%]
+    if max == 100      # [ 24%]
       6
-    else              # [ 24.0%]
+    else               # [ 24.0%]
       8
     end
   end
@@ -143,6 +151,10 @@ class ProgressBar
 
   def rate_width     # [ 23.45/s]
     render_rate.length
+  end
+
+  def max_width
+    max.to_s.length
   end
 
   def format_interval(interval)

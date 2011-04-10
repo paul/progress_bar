@@ -4,7 +4,9 @@ source "http://rubygems.org"
 gem "highline"
 gem "options"
 
-group :development do
+group :development, :test do
+  gem "rspec"
+  gem "timecop"
 end
 
 
