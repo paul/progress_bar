@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = "progress_bar"
   s.version     = ProgressBar::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Paul Sasauskas"]
+  s.authors     = ["Paul Sadauskas"]
   s.email       = ["psadauskas@gmail.com"]
   s.homepage    = "http://www.github.com/paul/progress_bar"
   s.summary     = %q{Simple Progress Bar for output to a terminal}
