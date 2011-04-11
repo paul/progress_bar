@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "progress_bar"
 
   s.add_dependency('options', '~> 2.3.0')
+  s.add_dependency('highline', '~> 1.6.1')
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
