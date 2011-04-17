@@ -116,7 +116,7 @@ class ProgressBar
   end
 
   def terminal_width
-    @hl.output_cols.to_i
+    @terminal_width ||= @hl.output_cols.to_i
   end
 
   def bar_width
