@@ -136,8 +136,8 @@ class ProgressBar
   def percentage_width
     if max == 100      # [ 24%]
       6
-    else               # [ 24.0%]
-      8
+    else               # [ 24.00%]
+      9
     end
   end
 
