@@ -6,17 +6,15 @@ class ProgressBar
 
   attr_accessor :count, :max, :start, :meters
 
-  def initialize(max = 100, *meters)
+  def initialize(*args)
 
-    @count  = 0
-    @max    = max
-    @start  = Time.now
+    @count = 0
+    @max   = 100
+    @start = Time.now
+    @meters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
-    if meters.empty?
-      @meters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
-    else
-      @meters = meters
-    end
+    @max = args.shift if args.first.is_a? Numeric
+    @meters = args unless args.empty?
 
     @hl = HighLine.new
   end
