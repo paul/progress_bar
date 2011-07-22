@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "progress_bar/version"
 
 Gem::Specification.new do |s|
   s.name        = "progress_bar"
-  s.version     = ProgressBar::VERSION
+  s.version     = '0.3.4'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Paul Sadauskas"]
   s.email       = ["psadauskas@gmail.com"]

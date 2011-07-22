@@ -53,6 +53,10 @@ pass them to the constructor:
 
     bar = ProgressBar.new(100, :bar, :rate, :eta)
 
+Or, if you don't want (or know) the max:
+
+    bar = ProgressBar.new(:bar, :rate, :eta)
+
 
 ### Available Meters
 
@@ -66,6 +70,20 @@ pass them to the constructor:
    completed, a guess at how long the rest will take. Ex: `[01:30]`
  * `:rate` -- The rate at which items are being completed. Ex: `[
    42.42/s]`
+
+
+## Don't update the bar as often
+
+If you have tens (or hundreds) of thousands of records to process
+and don't want to update the progress bar every time, but say only
+after processing 1000 records instantiate it like so:
+
+    bar = ProgressBar.new(...., :write_every => 1000)
+
+Call increment! like normal, but it will now only update the output
+if the count is evenly divisible by 1000.
+
+## Tests
 
 Run the tests to see examples of all the formats, with different values
 and maximums.
