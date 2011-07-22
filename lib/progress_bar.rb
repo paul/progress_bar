@@ -23,7 +23,7 @@ class ProgressBar
 
   def increment!(count = 1)
     self.count += count
-    write if self.count % @options[:write_every] == 0
+    write if self.count >= @max || self.count % @options[:write_every] == 0
   end
 
   def write
