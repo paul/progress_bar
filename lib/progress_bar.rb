@@ -4,16 +4,18 @@ require 'highline'
 
 class ProgressBar
 
-  attr_accessor :count, :max, :start, :meters
+  attr_accessor :count, :max, :start, :meters, :options
 
   def initialize(*args)
 
-    @count = 0
-    @max   = 100
-    @start = Time.now
-    @meters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    @count   = 0
+    @max     = 100
+    @start   = Time.now
+    @meters  = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    @options = {:write_every => 1}
 
     @max = args.shift if args.first.is_a? Numeric
+    @options.merge!(args.pop) if args.last.is_a? Hash
     @meters = args unless args.empty?
 
     @hl = HighLine.new
@@ -21,7 +23,7 @@ class ProgressBar
 
   def increment!(count = 1)
     self.count += count
-    write
+    write if self.count % @options[:write_every] == 0
   end
 
   def write
