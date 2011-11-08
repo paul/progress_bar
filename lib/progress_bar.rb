@@ -25,8 +25,10 @@ class ProgressBar
     self.count += count
     now = Time.now
     if (now - @last_write) > 0.2 || self.count >= max
-      write
-      @last_write = now
+      unless self.count > max
+        write
+        @last_write = now
+      end
     end
   end
 
