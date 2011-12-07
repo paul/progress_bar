@@ -120,7 +120,13 @@ class ProgressBar
   end
 
   def terminal_width
-    @terminal_width ||= @hl.output_cols.to_i
+    # HighLine check takes a long time, so only update width every second.
+    if @last_width_adjustment.nil? || Time.now - @last_width_adjustment > 1
+      @last_width_adjustment = Time.now
+      @terminal_width = @hl.output_cols.to_i
+    else
+      @terminal_width
+    end
   end
 
   def bar_width
