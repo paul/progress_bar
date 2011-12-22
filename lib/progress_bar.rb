@@ -125,6 +125,10 @@ class ProgressBar
     if @last_width_adjustment.nil? || Time.now - @last_width_adjustment > 1
       @last_width_adjustment = Time.now
       @terminal_width = @hl.output_cols.to_i
+      if @terminal_width < 1
+        @terminal_width = 80
+      end
+      @terminal_width
     else
       @terminal_width
     end
