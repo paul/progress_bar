@@ -3,11 +3,16 @@ module ProgressBar
     attr_accessor :count, :max, :meters
 
     def initialize(*args)
-      @count      = 0
+      # defaults
       @max        = 100
       @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+      @update_frequency = default_update_frequency
+
+      @count      = 0
 
       @max        = args.shift if args.first.is_a? Numeric
+      @options    = args.last.is_a?(Hash) ? args.pop : {}
+      @update_frequency = @options[:update_frequency] if @options[:update_frequency]
       @meters     = args unless args.empty?
 
       @last_write = Time.at(0)
@@ -17,7 +22,7 @@ module ProgressBar
     def increment!(count = 1)
       self.count += count
       now = Time.now
-      if (now - @last_write) > 0.2 || self.count >= max
+      if (now - @last_write) > @update_frequency || self.count >= max
         write
         @last_write = now
       end
@@ -66,6 +71,10 @@ module ProgressBar
     end
 
     protected
+
+    def default_update_frequency
+      raise NotImplementedError
+    end
 
     def print(str)
       raise NotImplementedError

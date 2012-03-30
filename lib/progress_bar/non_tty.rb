@@ -6,6 +6,10 @@ module ProgressBar
 
     protected
 
+    def default_update_frequency
+      2 # seconds
+    end
+
     def terminal_width
       100
     end

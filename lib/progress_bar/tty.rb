@@ -11,6 +11,12 @@ module ProgressBar
       print to_s
     end
 
+    protected
+
+    def default_update_frequency
+      0.2 # seconds
+    end
+
     def print(str)
       $stderr.write str
     end
