@@ -1,5 +1,6 @@
-
 require 'options'
+
+$LOAD_PATH << 'lib'
 require 'progress_bar/base'
 require 'progress_bar/tty'
 require 'progress_bar/non_tty'
