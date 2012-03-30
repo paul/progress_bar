@@ -7,6 +7,14 @@ require 'progress_bar/non_tty'
 
 module ProgressBar
   def self.new(*args)
-    ProgressBar::TTY.new(*args)
+    if tty?
+      ProgressBar::TTY.new(*args)
+    else
+      ProgressBar::NonTTY.new(*args)
+    end
+  end
+
+  def self.tty?
+    $stdout.isatty
   end
 end
