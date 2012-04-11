@@ -34,7 +34,7 @@ it.*
 Usually, the defaults should be fine, the only thing you'll need to
 tweak is the max.
 
-    bar = ProgressBar.new(1000)
+    bar = ProgressBar.new(max: 1000)
 
 ## Larger Steps
 
