@@ -12,20 +12,20 @@ describe 'ProgressBar arguments' do
     bar.meters.should == @default_meters
   end
 
-  it "should allow a single argument specifying the max" do
-    bar = ProgressBar.new(123)
+  it "should allow specifying the max" do
+    bar = ProgressBar.new(max: 123)
     bar.max.should == 123
     bar.meters.should == @default_meters
   end
 
   it "should allow specifying just the meters" do
-    bar = ProgressBar.new(:bar, :eta)
+    bar = ProgressBar.new(meters: [:bar, :eta])
     bar.max.should == @default_max
     bar.meters.should == [:bar, :eta]
   end
 
   it "should allow specyfing the max and meters" do
-    bar = ProgressBar.new(123, :bar, :eta)
+    bar = ProgressBar.new(max: 123, meters: [:bar, :eta])
     bar.max.should == 123
     bar.meters.should == [:bar, :eta]
   end

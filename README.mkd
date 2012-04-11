@@ -50,7 +50,7 @@ By default, ProgressBar will use all available meters (this will
 probably change). To select which meters you want, and in which order,
 pass them to the constructor:
 
-    bar = ProgressBar.new(100, :bar, :rate, :eta)
+    bar = ProgressBar.new(max: 100, :meters => [:bar, :rate, :eta])
 
 
 ### Available Meters

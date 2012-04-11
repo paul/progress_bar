@@ -3,7 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 describe 'ProgressBar bar output' do
   before do
     Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 0)
-    @progress_bar = ProgressBar.new(100)
+    @progress_bar = ProgressBar.new(max: 100)
     @progress_bar.stub(:terminal_width) { 60 }
     Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 10) # 10 seconds later
   end
