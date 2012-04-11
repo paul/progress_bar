@@ -5,12 +5,13 @@ require 'highline'
 class ProgressBar
 
   attr_accessor :count, :max, :meters, :format
+  METERS = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
   def initialize(args = {})
 
     @count      = 0
     @max        = 100
-    @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    @meters     = METERS
     @format     = ["#", " "]
 
     @max        = args[:max] if args.has_key? :max
@@ -18,6 +19,9 @@ class ProgressBar
     @format     = args[:format] if args.has_key? :format
 
     raise 'Max must be a Numeric' unless @max.is_a? Numeric
+    @meters.each do |m|
+      raise 'Meter name given is not a valid type' unless METERS.include? m
+    end
     @format.each do |f|
       raise 'Format string not correct size, please use 1 char' unless f.size == 1
     end

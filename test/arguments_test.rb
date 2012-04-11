@@ -36,6 +36,12 @@ describe 'ProgressBar arguments' do
     bar.format.should == test_format
   end
 
+  it "should raise error if the meter is not a valid meter type" do
+    lambda {
+      bar = ProgressBar.new(meters: [:bar, :spinner])
+    }.should raise_error('Meter name given is not a valid type')
+  end
+
   it "should raise error if the max is not a Number" do
     lambda {
       bar = ProgressBar.new(max: 'text')
