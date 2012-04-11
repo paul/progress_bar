@@ -4,16 +4,28 @@ require 'highline'
 
 class ProgressBar
 
-  attr_accessor :count, :max, :meters
+  attr_accessor :count, :max, :meters, :format
+  METERS = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
-  def initialize(*args)
+  def initialize(args = {})
 
     @count      = 0
     @max        = 100
-    @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    @meters     = METERS
+    @format     = ["#", " "]
 
-    @max        = args.shift if args.first.is_a? Numeric
-    @meters     = args unless args.empty?
+    @max        = args[:max] if args.has_key? :max
+    @meters     = args[:meters] if args.has_key? :meters
+    @format     = args[:format] if args.has_key? :format
+
+    raise 'Max must be a Numeric' unless @max.is_a? Numeric
+    @meters.each do |m|
+      raise 'Meter name given is not a valid type' unless METERS.include? m
+    end
+    raise 'Format param must be an array of two elements' unless @format.size == 2
+    @format.each do |f|
+      raise 'Format string not correct size, please use 1 char' unless f.size == 1
+    end
 
     @last_write = Time.at(0)
     @start      = Time.now
@@ -93,8 +105,8 @@ class ProgressBar
 
   def render_bar
     "[" +
-      "#" * (ratio * (bar_width - 2)).ceil +
-      " " * ((1-ratio) * (bar_width - 2)).floor +
+      @format[0] * (ratio * (bar_width - 2)).ceil +
+      @format[1] * ((1-ratio) * (bar_width - 2)).floor +
     "]"
   end
 

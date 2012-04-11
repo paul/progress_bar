@@ -2,7 +2,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
 describe 'ProgressBar percentage output' do
   before do
-    @progress_bar = ProgressBar.new(100, :percentage)
+    @progress_bar = ProgressBar.new(max: 100, meters: [:percentage])
   end
 
   subject { @progress_bar.to_s }
@@ -33,7 +33,7 @@ describe 'ProgressBar percentage output' do
 
   describe 'with a max that is not 100' do
     before do
-      @progress_bar = ProgressBar.new(42, :percentage)
+      @progress_bar = ProgressBar.new(max: 42, meters: [:percentage])
       @progress_bar.count = 21
     end
 

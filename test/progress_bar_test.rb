@@ -3,7 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 describe 'ProgressBar bar output' do
   before do
     Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 0)
-    @progress_bar = ProgressBar.new(100)
+    @progress_bar = ProgressBar.new(max: 100)
     @progress_bar.stub(:terminal_width) { 60 }
     Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 10) # 10 seconds later
   end
@@ -32,6 +32,15 @@ describe 'ProgressBar bar output' do
     end
 
     it { should == "[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
+  end
+
+  describe 'with format as * and .' do
+    before do
+      @progress_bar.count = 50
+      @progress_bar.format = ["*", "."]
+    end
+
+    it { should == "[*******.......] [ 50/100] [ 50%] [00:10] [00:10] [  5.00/s]" }
   end
 
 end

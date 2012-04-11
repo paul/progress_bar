@@ -13,7 +13,6 @@ as possible.
 
 ## The Easy Way
 
-
     require 'progress_bar'
     bar = ProgressBar.new
 
@@ -35,7 +34,7 @@ it.*
 Usually, the defaults should be fine, the only thing you'll need to
 tweak is the max.
 
-    bar = ProgressBar.new(1000)
+    bar = ProgressBar.new(max: 1000)
 
 ## Larger Steps
 
@@ -51,13 +50,12 @@ By default, ProgressBar will use all available meters (this will
 probably change). To select which meters you want, and in which order,
 pass them to the constructor:
 
-    bar = ProgressBar.new(100, :bar, :rate, :eta)
+    bar = ProgressBar.new(max: 100, :meters => [:bar, :rate, :eta], :format => ["#", " "])
 
 
 ### Available Meters
 
- * `:bar` -- The bar itself, fills empty space with "#"s. Ex: `[###
-   ]`.
+ * `:bar` -- The bar itself, fills empty space with "#"s. Ex: `[###   ]`
  * `:counter` -- Number of items complete, over the max. Ex: `[ 20/100]`
  * `:percentage` -- Percentage of items in the maximum. Ex: `[ 42%]`
  * `:elapsed` -- Time elapsed (since the ProgressBar was initialized.
@@ -67,10 +65,13 @@ pass them to the constructor:
  * `:rate` -- The rate at which items are being completed. Ex: `[
    42.42/s]`
 
+
+# Testing
+
 Run the tests to see examples of all the formats, with different values
 and maximums.
 
-    `rspec test/*_test.rb`
+    rspec test/*_test.rb
 
 
 

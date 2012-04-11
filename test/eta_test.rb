@@ -3,7 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 describe 'ProgressBar eta output' do
   before do
     Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 0)
-    @progress_bar = ProgressBar.new(100, :eta)
+    @progress_bar = ProgressBar.new(max: 100, meters: [:eta])
     Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 10) # 10 seconds later
   end
 
@@ -36,7 +36,7 @@ describe 'ProgressBar eta output' do
   describe 'with times over 1 hour' do
     before do
       Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 0)
-      @progress_bar = ProgressBar.new(42, :eta)
+      @progress_bar = ProgressBar.new(max:42, meters: [:eta])
       @progress_bar.count = 21
       Timecop.freeze Time.utc(2010, 3, 10, 2, 0, 0) # 2 hours later
     end

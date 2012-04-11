@@ -2,7 +2,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
 describe 'ProgressBar bar output' do
   before do
-    @progress_bar = ProgressBar.new(100, :bar)
+    @progress_bar = ProgressBar.new(max: 100, meters: [:bar])
     @progress_bar.stub(:terminal_width) { 12 }
   end
 
