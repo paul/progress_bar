@@ -35,5 +35,23 @@ describe 'ProgressBar arguments' do
     bar = ProgressBar.new(format: test_format)
     bar.format.should == test_format
   end
+
+  it "should raise error if the max is not a Number" do
+    lambda {
+      bar = ProgressBar.new(max: 'text')
+    }.should raise_error('Max must be a Numeric')
+  end
+
+  it "should raise error if the format is more than 1 char long" do
+    lambda {
+      bar = ProgressBar.new(format: ["++", "--"])
+    }.should raise_error('Format string not correct size, please use 1 char')
+  end
+
+  it "should raise error if the format is less than 1 char long" do
+    lambda {
+      bar = ProgressBar.new(format: ["*", ""])
+    }.should raise_error('Format string not correct size, please use 1 char')
+  end
 end
 

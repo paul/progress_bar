@@ -17,6 +17,11 @@ class ProgressBar
     @meters     = args[:meters] if args.has_key? :meters
     @format     = args[:format] if args.has_key? :format
 
+    raise 'Max must be a Numeric' unless @max.is_a? Numeric
+    @format.each do |f|
+      raise 'Format string not correct size, please use 1 char' unless f.size == 1
+    end
+
     @last_write = Time.at(0)
     @start      = Time.now
 
