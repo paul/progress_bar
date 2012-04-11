@@ -22,6 +22,7 @@ class ProgressBar
     @meters.each do |m|
       raise 'Meter name given is not a valid type' unless METERS.include? m
     end
+    raise 'Format param must be an array of two elements' unless @format.size == 2
     @format.each do |f|
       raise 'Format string not correct size, please use 1 char' unless f.size == 1
     end

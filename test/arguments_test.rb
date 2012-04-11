@@ -59,5 +59,10 @@ describe 'ProgressBar arguments' do
       bar = ProgressBar.new(format: ["*", ""])
     }.should raise_error('Format string not correct size, please use 1 char')
   end
-end
 
+  it "should raise error if the format array is too long" do
+    lambda {
+      bar = ProgressBar.new(format: ["*", " ", "-"])
+    }.should raise_error('Format param must be an array of two elements')
+  end
+end
