@@ -34,6 +34,15 @@ describe 'ProgressBar bar output' do
     it { should == "[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
   end
 
+  describe 'with format as * and .' do
+    before do
+      @progress_bar.count = 50
+      @progress_bar.format = ["*", "."]
+    end
+
+    it { should == "[*******.......] [ 50/100] [ 50%] [00:10] [00:10] [  5.00/s]" }
+  end
+
 end
 
 
