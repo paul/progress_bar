@@ -30,5 +30,10 @@ describe 'ProgressBar arguments' do
     bar.meters.should == [:bar, :eta]
   end
 
+  it "should allow specyfing the format" do
+    test_format = ["O", "o"]
+    bar = ProgressBar.new(format: test_format)
+    bar.format.should == test_format
+  end
 end
 

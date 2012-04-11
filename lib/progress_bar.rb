@@ -15,6 +15,7 @@ class ProgressBar
 
     @max        = args[:max] if args.has_key? :max
     @meters     = args[:meters] if args.has_key? :meters
+    @format     = args[:format] if args.has_key? :format
 
     @last_write = Time.at(0)
     @start      = Time.now
