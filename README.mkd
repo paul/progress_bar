@@ -13,7 +13,6 @@ as possible.
 
 ## The Easy Way
 
-
     require 'progress_bar'
     bar = ProgressBar.new
 
@@ -56,8 +55,7 @@ pass them to the constructor:
 
 ### Available Meters
 
- * `:bar` -- The bar itself, fills empty space with "#"s. Ex: `[###
-   ]`.
+ * `:bar` -- The bar itself, fills empty space with "#"s. Ex: `[###   ]`
  * `:counter` -- Number of items complete, over the max. Ex: `[ 20/100]`
  * `:percentage` -- Percentage of items in the maximum. Ex: `[ 42%]`
  * `:elapsed` -- Time elapsed (since the ProgressBar was initialized.
@@ -67,10 +65,13 @@ pass them to the constructor:
  * `:rate` -- The rate at which items are being completed. Ex: `[
    42.42/s]`
 
+
+# Testing
+
 Run the tests to see examples of all the formats, with different values
 and maximums.
 
-    `rspec test/*_test.rb`
+    rspec test/*_test.rb
 
 
 
