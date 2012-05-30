@@ -14,11 +14,16 @@ module ProgressBar
     end
   end
 
+  # Force one behaviour by setting this env variable one way or another.
+  #
+  # PROGRESS_BAR_FORCE=tty
+  # PROGRESS_BAR_FORCE=non_tty
   def self.tty?
     if forced_mode = ENV['PROGRESS_BAR_FORCE']
       return false  if forced_mode =~ /non.?tty/i
       return true   if forced_mode =~ /tty/i
-      raise ArgumentError, "Invalid value for env var PROGRESS_BAR_FORCE=#{forced_mode}. Acceptable: non_tty or tty."
+      raise ArgumentError, "Invalid value for env var PROGRESS_BAR_FORCE=#{
+                            forced_mode}. Acceptable: non_tty or tty."
     else
       $stdout.isatty
     end
