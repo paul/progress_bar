@@ -1,5 +1,4 @@
 
-require 'options'
 require 'highline'
 
 class ProgressBar

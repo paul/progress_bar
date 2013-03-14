@@ -2,7 +2,6 @@
 source "http://rubygems.org"
 
 gem "highline"
-gem "options"
 
 group :development, :test do
   gem "rspec"
