@@ -5,6 +5,9 @@
 long-running tasks on the console. It is intended to be as simple to use
 as possible.
 
+[![Build Status](https://travis-ci.org/[paul]/[progress_bar].png)](https://travis-ci.org/[paul]/[progress_bar])
+
+
 # Installation
 
     gem install progress_bar
