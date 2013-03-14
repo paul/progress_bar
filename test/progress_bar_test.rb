@@ -34,6 +34,14 @@ describe 'ProgressBar bar output' do
     it { should == "[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
   end
 
+  describe 'at count=105' do
+    before do
+      @progress_bar.count = 105
+    end
+
+    it { should == "[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
+  end
+
 end
 
 

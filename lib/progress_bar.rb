@@ -68,6 +68,7 @@ class ProgressBar
   end
 
   def to_s
+    self.count = max if count > max
     meters.inject("") do |text, meter|
       text << render(meter) + " "
     end.strip
