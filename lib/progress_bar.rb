@@ -92,6 +92,7 @@ class ProgressBar
   end
 
   def render_bar
+    return '' if bar_width < 2
     "[" +
       "#" * (ratio * (bar_width - 2)).ceil +
       " " * ((1-ratio) * (bar_width - 2)).floor +
@@ -124,6 +125,10 @@ class ProgressBar
     if @last_width_adjustment.nil? || Time.now - @last_width_adjustment > 1
       @last_width_adjustment = Time.now
       @terminal_width = @hl.output_cols.to_i
+      if @terminal_width < 1
+        @terminal_width = 80
+      end
+      @terminal_width
     else
       @terminal_width
     end
