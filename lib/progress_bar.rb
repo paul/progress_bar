@@ -10,10 +10,13 @@ class ProgressBar
 
     @count      = 0
     @max        = 100
-    @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    avail_meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
     @max        = args.shift if args.first.is_a? Numeric
-    @meters     = args unless args.empty?
+		
+    @meters = args.delete_if {|meter| not avail_meters.include? meter } if args
+    @meters = avail_meters if @meters.empty?
+		
 
     @last_write = Time.at(0)
     @start      = Time.now
