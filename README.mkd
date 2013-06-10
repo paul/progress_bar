@@ -1,4 +1,3 @@
-
 # ProgressBar
 
 *ProgressBar* is a simple Ruby library for displaying progress of
@@ -72,9 +71,10 @@ pass them to the constructor:
 
 Run the tests to see examples of all the formats, with different values
 and maximums.
-
-    `rspec test/*_test.rb`
-
+```
+gem install --development progress_bar
+rspec spec/*_spec.rb
+```
 
 
 
