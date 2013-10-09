@@ -15,8 +15,8 @@ class ProgressBar
     @max        = args.shift if args.first.is_a? Numeric
     @meters     = args unless args.empty?
 
-    @last_write = Time.at(0)
-    @start      = Time.now
+    @last_write = ::Time.at(0)
+    @start      = ::Time.now
 
     @hl         = HighLine.new
   end
