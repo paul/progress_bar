@@ -15,15 +15,15 @@ class ProgressBar
     @max        = args.shift if args.first.is_a? Numeric
     @meters     = args unless args.empty?
 
-    @last_write = Time.at(0)
-    @start      = Time.now
+    @last_write = ::Time.at(0)
+    @start      = ::Time.now
 
     @hl         = HighLine.new
   end
 
   def increment!(count = 1)
     self.count += count
-    now = Time.now
+    now = ::Time.now
     if (now - @last_write) > 0.2 || self.count >= max
       write
       @last_write = now
@@ -48,7 +48,7 @@ class ProgressBar
   end
 
   def elapsed
-    Time.now - @start
+    ::Time.now - @start
   end
 
   def rate
@@ -123,8 +123,8 @@ class ProgressBar
 
   def terminal_width
     # HighLine check takes a long time, so only update width every second.
-    if @last_width_adjustment.nil? || Time.now - @last_width_adjustment > 1
-      @last_width_adjustment = Time.now
+    if @last_width_adjustment.nil? || ::Time.now - @last_width_adjustment > 1
+      @last_width_adjustment = ::Time.now
       @terminal_width = @hl.output_cols.to_i
       if @terminal_width < 1
         @terminal_width = 80
