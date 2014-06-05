@@ -1,10 +1,15 @@
 # ProgressBar
 
+[![Build Status](https://travis-ci.org/paul/progress_bar.png?branch=master)](https://travis-ci.org/paul/progress_bar)
+
 *ProgressBar* is a simple Ruby library for displaying progress of
 long-running tasks on the console. It is intended to be as simple to use
 as possible.
 
-[![Build Status](https://travis-ci.org/paul/progress_bar.png?branch=master)](https://travis-ci.org/paul/progress_bar)
+**NOTE:** This project isn't dead! It's just feature complete, and I don't want
+to keep adding things to it. If you find bugs, please open an Issue, or even
+better, a Pull Request, and I'll take a look. We at ProgressBar know you have
+lots of progress bar alternatives, and we thank you for using ProgressBar!
 
 
 # Installation
