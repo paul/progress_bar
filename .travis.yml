@@ -8,3 +8,9 @@ rvm:
   - jruby-head
   - rbx-2.1.1
 
+matrix:
+  allow_failures:
+    - rvm:
+      - rbx-2.1.1
+      - jruby-head
+      - ruby-head
