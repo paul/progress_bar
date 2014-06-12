@@ -30,5 +30,11 @@ describe 'ProgressBar arguments' do
     bar.meters.should == [:bar, :eta]
   end
 
+  it "should raise an error when initial max is nonsense" do
+    lambda {
+      bar = ProgressBar.new(0)
+    }.should raise_error(ProgressBar::ArgumentError)
+  end
+
 end
 

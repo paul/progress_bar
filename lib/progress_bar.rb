@@ -3,6 +3,8 @@ require 'options'
 require 'highline'
 
 class ProgressBar
+  Error = Class.new(StandardError)
+  ArgumentError = Class.new(Error)
 
   attr_accessor :count, :max, :meters
 
@@ -13,6 +15,8 @@ class ProgressBar
     @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
     @max        = args.shift if args.first.is_a? Numeric
+    raise ArgumentError, "Max must be a positive integer" unless @max > 0
+
     @meters     = args unless args.empty?
 
     @last_write = ::Time.at(0)
