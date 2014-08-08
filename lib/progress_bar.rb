@@ -44,7 +44,7 @@ class ProgressBar
   end
 
   def ratio
-    count.to_f / max
+    [count.to_f / max, 1.0].min # never go above 1, even if count > max
   end
 
   def percentage
@@ -127,7 +127,9 @@ class ProgressBar
 
   def terminal_width
     # HighLine check takes a long time, so only update width every second.
-    if @last_width_adjustment.nil? || ::Time.now - @last_width_adjustment > 1
+    if @terminal_width.nil? || @last_width_adjustment.nil? || 
+                               ::Time.now - @last_width_adjustment > 1
+
       @last_width_adjustment = ::Time.now
       @terminal_width = @hl.output_cols.to_i
       if @terminal_width < 1
