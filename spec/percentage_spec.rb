@@ -12,7 +12,7 @@ describe 'ProgressBar percentage output' do
       @progress_bar.count = 0
     end
 
-    it { should == "[  0%]" }
+    it { is_expected.to eq("[  0%]") }
   end
 
   describe 'at count=50' do
@@ -20,7 +20,7 @@ describe 'ProgressBar percentage output' do
       @progress_bar.count = 50
     end
 
-    it { should == "[ 50%]" }
+    it { is_expected.to eq("[ 50%]") }
   end
 
   describe 'at count=100' do
@@ -28,7 +28,7 @@ describe 'ProgressBar percentage output' do
       @progress_bar.count = 100
     end
 
-    it { should == "[100%]" }
+    it { is_expected.to eq("[100%]") }
   end
 
   describe 'with a max that is not 100' do
@@ -37,7 +37,7 @@ describe 'ProgressBar percentage output' do
       @progress_bar.count = 21
     end
 
-    it { should == '[ 50.00%]' }
+    it { is_expected.to eq('[ 50.00%]') }
   end
 
 end
