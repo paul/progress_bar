@@ -12,7 +12,7 @@ describe 'ProgressBar counter output' do
       @progress_bar.count = 0
     end
 
-    it { should == "[  0/100]" }
+    it { is_expected.to eq("[  0/100]") }
   end
 
   describe 'at count=50' do
@@ -20,7 +20,7 @@ describe 'ProgressBar counter output' do
       @progress_bar.count = 50
     end
 
-    it { should == "[ 50/100]" }
+    it { is_expected.to eq("[ 50/100]") }
   end
 
   describe 'at count=100' do
@@ -28,7 +28,7 @@ describe 'ProgressBar counter output' do
       @progress_bar.count = 100
     end
 
-    it { should == "[100/100]" }
+    it { is_expected.to eq("[100/100]") }
   end
 
   describe 'with a shorter max' do
@@ -36,7 +36,7 @@ describe 'ProgressBar counter output' do
       @progress_bar = ProgressBar.new(42, :counter)
     end
 
-    it { should == '[ 0/42]' }
+    it { is_expected.to eq('[ 0/42]') }
   end
 
   describe 'with a longer max' do
@@ -44,7 +44,7 @@ describe 'ProgressBar counter output' do
       @progress_bar = ProgressBar.new(4242, :counter)
     end
 
-    it { should == '[   0/4242]' }
+    it { is_expected.to eq('[   0/4242]') }
   end
 
 end

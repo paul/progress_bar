@@ -14,7 +14,7 @@ describe 'ProgressBar rate output' do
       @progress_bar.count = 0
     end
 
-    it { should == "[  0.00/s]" }
+    it { is_expected.to eq("[  0.00/s]") }
   end
 
   describe 'at count=50' do
@@ -22,7 +22,7 @@ describe 'ProgressBar rate output' do
       @progress_bar.count = 50
     end
 
-    it { should == "[  5.00/s]" }
+    it { is_expected.to eq("[  5.00/s]") }
   end
 
   describe 'at count=100' do
@@ -30,7 +30,7 @@ describe 'ProgressBar rate output' do
       @progress_bar.count = 100
     end
 
-    it { should == "[ 10.00/s]" }
+    it { is_expected.to eq("[ 10.00/s]") }
   end
 
   describe 'with a shorter max' do
@@ -41,7 +41,7 @@ describe 'ProgressBar rate output' do
       Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 10) # 10 seconds later
     end
 
-    it { should == '[ 2.10/s]' }
+    it { is_expected.to eq('[ 2.10/s]') }
   end
 
   describe 'with a longer max' do
@@ -52,7 +52,7 @@ describe 'ProgressBar rate output' do
       Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 10) # 10 seconds later
     end
 
-    it { should == '[   2.10/s]' }
+    it { is_expected.to eq('[   2.10/s]') }
   end
 
 end

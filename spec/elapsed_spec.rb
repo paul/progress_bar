@@ -15,7 +15,7 @@ describe 'ProgressBar elapsed output' do
       @progress_bar.count = 0
     end
 
-    it { should == "[00:10]" }
+    it { is_expected.to eq("[00:10]") }
   end
 
   describe 'at count=50' do
@@ -23,7 +23,7 @@ describe 'ProgressBar elapsed output' do
       @progress_bar.count = 50
     end
 
-    it { should == "[00:10]" }
+    it { is_expected.to eq("[00:10]") }
   end
 
   describe 'at count=100' do
@@ -31,7 +31,7 @@ describe 'ProgressBar elapsed output' do
       @progress_bar.count = 100
     end
 
-    it { should == "[00:10]" }
+    it { is_expected.to eq("[00:10]") }
   end
 
   describe 'with times over 1 hour' do
@@ -41,7 +41,7 @@ describe 'ProgressBar elapsed output' do
       Timecop.freeze Time.utc(2010, 3, 10, 2, 0, 0) # 2 hours later
     end
 
-    it { should == '[02:00:00]' }
+    it { is_expected.to eq('[02:00:00]') }
   end
 
 end
