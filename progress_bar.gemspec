@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Paul Sadauskas"]
   s.email       = ["psadauskas@gmail.com"]
-  s.homepage    = "http://www.github.com/paul/progress_bar"
+  s.homepage    = "http://github.com/paul/progress_bar"
   s.summary     = %q{Simple Progress Bar for output to a terminal}
   s.description = %q{Give people feedback about long-running tasks without overloading them with information: Use a progress bar, like Curl or Wget!}
 
