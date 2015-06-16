@@ -35,7 +35,7 @@ class ProgressBar
   end
 
   def write
-    clear!
+    carriage_return!
     print to_s
   end
 
@@ -78,14 +78,18 @@ class ProgressBar
     end.strip
   end
 
+  def clear!
+    print "\r#{' ' * terminal_width}\r"
+  end
+
   protected
+
+  def carriage_return!
+    print "\r"
+  end
 
   def print(str)
     $stderr.write str
-  end
-
-  def clear!
-    print "\r"
   end
 
   def render(meter)
@@ -127,7 +131,7 @@ class ProgressBar
 
   def terminal_width
     # HighLine check takes a long time, so only update width every second.
-    if @terminal_width.nil? || @last_width_adjustment.nil? || 
+    if @terminal_width.nil? || @last_width_adjustment.nil? ||
                                ::Time.now - @last_width_adjustment > 1
 
       @last_width_adjustment = ::Time.now

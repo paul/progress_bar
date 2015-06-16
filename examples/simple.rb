@@ -7,3 +7,6 @@ bar = ProgressBar.new
   sleep 0.1
   bar.increment!
 end
+
+# Optionally clear progress bar.
+bar.clear!
