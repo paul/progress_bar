@@ -11,7 +11,6 @@ to keep adding things to it. If you find bugs, please open an Issue, or even
 better, a Pull Request, and I'll take a look. We at ProgressBar know you have
 lots of progress bar alternatives, and we thank you for using ProgressBar!
 
-
 # Installation
 
     gem install progress_bar
@@ -19,7 +18,6 @@ lots of progress bar alternatives, and we thank you for using ProgressBar!
 # Examples
 
 ## The Easy Way
-
 
     require 'progress_bar'
     bar = ProgressBar.new
@@ -51,7 +49,6 @@ pass a number to `#increment!`
 
     bar.increment! 42
 
-
 ## Picking the meters
 
 By default, ProgressBar will use all available meters (this will
@@ -60,9 +57,9 @@ pass them to the constructor:
 
     bar = ProgressBar.new(100, :bar, :rate, :eta)
 
-
 ### Available Meters
 
+ * `:title` -- Optional title
  * `:bar` -- The bar itself, fills empty space with "#"s. Ex: `[###
    ]`.
  * `:counter` -- Number of items complete, over the max. Ex: `[ 20/100]`
@@ -80,7 +77,3 @@ and maximums.
 gem install --development progress_bar
 rspec spec/*_spec.rb
 ```
-
-
-
-

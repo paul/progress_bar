@@ -1,28 +1,40 @@
 
-require 'options'
 require 'highline'
 
 class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  attr_accessor :count, :max, :meters
+  attr_accessor :title, :count, :max, :meters
 
+  # Usage:
+  #
+  #   ProgressBar.new [ title=nil, ] [ max=100, ] [ *meters=:title, :bar, :counter, :percentage, :elapsed, :eta, :rate ]
+  #
+  # Example:
+  #
+  #   bar = ProgressBar.new # No title, 100 max count, all meters on.
+  #   bar = ProgressBar.new 'foo.tar.bz2', 256 # With title, 256 max count, all meters on.
+  #   bar = ProgressBar.new 200, :percentage # No title, 200 max count, :percentage meter only.
+  #
   def initialize(*args)
 
-    @count      = 0
-    @max        = 100
-    @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    # Defaults.
+    @title = nil
+    @count = 0
+    @max = 100
+    @meters = [:title, :bar, :counter, :percentage, :elapsed, :eta, :rate]
 
-    @max        = args.shift if args.first.is_a? Numeric
+    @title = args.shift if args.first.is_a? String
+    @max = args.shift if args.first.is_a? Numeric
     raise ArgumentError, "Max must be a positive integer" unless @max > 0
 
-    @meters     = args unless args.empty?
+    @meters = args unless args.empty?
 
     @last_write = ::Time.at(0)
-    @start      = ::Time.now
+    @start = ::Time.now
 
-    @hl         = HighLine.new
+    @hl = HighLine.new
   end
 
   def increment!(count = 1)
@@ -100,6 +112,10 @@ class ProgressBar
     send(:"#{meter}_width")
   end
 
+  def render_title
+    "[#{title}]"
+  end
+
   def render_bar
     return '' if bar_width < 2
     "[" +
@@ -142,6 +158,14 @@ class ProgressBar
       @terminal_width
     else
       @terminal_width
+    end
+  end
+
+  def title_width
+    if title
+      title.size + 2
+    else
+      0
     end
   end
 
