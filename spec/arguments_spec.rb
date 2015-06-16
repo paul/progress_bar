@@ -3,7 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 describe 'ProgressBar arguments' do
   before do
     @default_max = 100
-    @default_meters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    @default_meters = [:title, :bar, :counter, :percentage, :elapsed, :eta, :rate]
   end
 
   it "should set appropriate defaults without any arguments" do
@@ -14,6 +14,20 @@ describe 'ProgressBar arguments' do
 
   it "should allow a single argument specifying the max" do
     bar = ProgressBar.new(123)
+    bar.max.should == 123
+    bar.meters.should == @default_meters
+  end
+
+  it "should allow a single argument specifying the title" do
+    bar = ProgressBar.new('foo')
+    bar.title.should == 'foo'
+    bar.max.should == 100
+    bar.meters.should == @default_meters
+  end
+
+  it "should allow a two arguments specifying the title and max" do
+    bar = ProgressBar.new('foo', 123)
+    bar.title.should == 'foo'
     bar.max.should == 123
     bar.meters.should == @default_meters
   end
@@ -30,6 +44,13 @@ describe 'ProgressBar arguments' do
     bar.meters.should == [:bar, :eta]
   end
 
+  it "should allow specyfing the title, max and meters" do
+    bar = ProgressBar.new('foo', 123, :bar, :eta)
+    bar.title.should == 'foo'
+    bar.max.should == 123
+    bar.meters.should == [:bar, :eta]
+  end
+
   it "should raise an error when initial max is nonsense" do
     lambda {
       bar = ProgressBar.new(0)
@@ -37,4 +58,3 @@ describe 'ProgressBar arguments' do
   end
 
 end
-

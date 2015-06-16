@@ -18,6 +18,30 @@ describe 'ProgressBar bar output' do
     it { should == "[              ] [  0/100] [  0%] [00:10] [00:00] [  0.00/s]" }
   end
 
+  describe 'at count=0 with title' do
+    before do
+      @progress_bar.title = 'foo'
+      @progress_bar.count = 0
+    end
+    it { should == "[foo] [        ] [  0/100] [  0%] [00:10] [00:00] [  0.00/s]" }
+  end
+
+  describe 'at count=50 with title' do
+    before do
+      @progress_bar.title = 'foo'
+      @progress_bar.count = 50
+    end
+    it { should == "[foo] [####    ] [ 50/100] [ 50%] [00:10] [00:10] [  5.00/s]" }
+  end
+
+  describe 'at count=100 with title' do
+    before do
+      @progress_bar.title = 'foo'
+      @progress_bar.count = 100
+    end
+    it { should == "[foo] [########] [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
+  end
+
   describe 'at count=50' do
     before do
       @progress_bar.count = 50
@@ -43,5 +67,3 @@ describe 'ProgressBar bar output' do
   end
 
 end
-
-

@@ -85,9 +85,10 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    meters.inject("") do |text, meter|
-      text << render(meter) + " "
-    end.strip
+    meters
+      .map { |meter| render(meter) }
+      .reject { |rendered_meter| rendered_meter.nil? }
+      .join ' '
   end
 
   def clear!
@@ -113,7 +114,7 @@ class ProgressBar
   end
 
   def render_title
-    "[#{title}]"
+    "[#{title}]" if title
   end
 
   def render_bar
@@ -174,9 +175,11 @@ class ProgressBar
   end
 
   def non_bar_width
-    meters.reject { |m| m == :bar }.inject(0) do |width, meter|
-      width += width_of(meter) + 1
-    end
+    meters
+      .reject { |meter| meter == :bar }
+      .map { |meter| width_of(meter) }
+      .select { |meter_width| meter_width > 0 }
+      .inject(0) { |width, meter_width| width += meter_width + 1 }
   end
 
   def counter_width   # [  1/100]
