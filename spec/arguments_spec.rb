@@ -32,7 +32,7 @@ describe 'ProgressBar arguments' do
 
   it "should raise an error when initial max is nonsense" do
     lambda {
-      bar = ProgressBar.new(0)
+      bar = ProgressBar.new(-1)
     }.should raise_error(ProgressBar::ArgumentError)
   end
 
