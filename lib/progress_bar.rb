@@ -188,3 +188,5 @@ class ProgressBar
   end
 
 end
+
+require_relative 'progress_bar/with_progress'
