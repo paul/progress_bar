@@ -98,9 +98,11 @@ class ProgressBar
 
   def render_bar
     return '' if bar_width < 2
+    progress_width = (ratio * (bar_width - 2)).floor
+    remained_width = bar_width - 2 - progress_width
     "[" +
-      "#" * (ratio * (bar_width - 2)).ceil +
-      " " * ((1-ratio) * (bar_width - 2)).floor +
+      "#" * progress_width +
+      " " * remained_width +
     "]"
   end
 
