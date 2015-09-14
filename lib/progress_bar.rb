@@ -99,10 +99,10 @@ class ProgressBar
   def render_bar
     return '' if bar_width < 2
     progress_width = (ratio * (bar_width - 2)).floor
-    remained_width = bar_width - 2 - progress_width
+    remainder_width = bar_width - 2 - progress_width
     "[" +
       "#" * progress_width +
-      " " * remained_width +
+      " " * remainder_width +
     "]"
   end
 
@@ -129,7 +129,7 @@ class ProgressBar
 
   def terminal_width
     # HighLine check takes a long time, so only update width every second.
-    if @terminal_width.nil? || @last_width_adjustment.nil? || 
+    if @terminal_width.nil? || @last_width_adjustment.nil? ||
                                ::Time.now - @last_width_adjustment > 1
 
       @last_width_adjustment = ::Time.now
