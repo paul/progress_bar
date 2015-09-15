@@ -31,22 +31,22 @@ describe 'ProgressBar bar output' do
     it { should == "[##########]" }
   end
 
-  describe 'at count=25 (non-integer divide, should round up)' do
+  describe 'at count=25 (non-integer divide, should round down)' do
     let(:count) { 25 }
 
-    it { should == "[###       ]" }
+    it { should == "[##        ]" }
   end
 
   # https://github.com/paul/progress_bar/pull/31
   describe "constant bar width" do
     let(:max)            { 17 }
     let(:count)          {  0 }
-    let(:terminal_width) { 34 }
+    let(:terminal_width) { 80 }
 
     it "has a constant bar width for all values of max and count" do
       (count..max).each do |i|
         progress_bar.count = i
-        expect( progress_bar.to_s.length ).to eq(34)
+        expect( progress_bar.to_s.length ).to eq(80)
       end
     end
   end
