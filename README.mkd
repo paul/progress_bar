@@ -104,7 +104,7 @@ If you are using progress_bar regularly on plain arrays, you may want to
 do:
 
 ```ruby
-require 'progress_bar/enumerable'
+require 'progress_bar/core_ext/enumerable_with_progress'
 
 # it adds each_with_progress/with_progress to Array/Hash/Range
 
