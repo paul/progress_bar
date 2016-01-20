@@ -81,6 +81,32 @@ gem install --development progress_bar
 rspec spec/*_spec.rb
 ```
 
+## Using ProgressBar on Enumerable-alikes.
 
+If you do a lot of progresses, you can shorten your way with this:
 
+```ruby
+class Array
+  include ProgressBar::WithProgress
+end
 
+[1,2,3].each_with_progress{do_something}
+
+# or any other Enumerable's methods:
+
+(1..1000).to_a.with_progress.select{|i| (i % 2).zero?}
+```
+
+You can include `ProgressBar::WithProgress` in any class, having methods
+`#count` and `#each`, like some DB datasets and so on.
+
+If you are using progress_bar regularly on plain arrays, you may want to
+do:
+
+```ruby
+require 'progress_bar/core_ext/enumerable_with_progress'
+
+# it adds each_with_progress/with_progress to Array/Hash/Range
+
+(1..400).with_progress.select{|i| (i % 2).zero?}
+```

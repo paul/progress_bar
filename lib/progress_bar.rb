@@ -15,7 +15,7 @@ class ProgressBar
     @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
     @max        = args.shift if args.first.is_a? Numeric
-    raise ArgumentError, "Max must be a positive integer" unless @max > 0
+    raise ArgumentError, "Max must be a positive integer" unless @max >= 0
 
     @meters     = args unless args.empty?
 
@@ -190,3 +190,5 @@ class ProgressBar
   end
 
 end
+
+require_relative 'progress_bar/with_progress'
