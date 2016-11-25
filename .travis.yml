@@ -1,18 +1,15 @@
 script: rake spec
 rvm:
-  - 2.0.0-p648
-  # - 2.1.9
-  - 2.2.4
-  - 2.3.0
+  - 2.2
+  - 2.3
+  - 2.4
   - ruby-head
-  # - jruby-head
+  - jruby-head
   - rbx-2
 
 matrix:
   allow_failures:
     - rvm:
-      - 2.0.0
-      - 2.1.9
       - jruby-head
       - ruby-head
       - rbx-2.1.1
