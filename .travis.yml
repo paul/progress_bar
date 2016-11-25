@@ -2,7 +2,7 @@ script: rake spec
 rvm:
   - 2.2
   - 2.3
-  - 2.4
+  - 2.4.0-preview3
   - ruby-head
   - jruby-head
   - rbx-2
@@ -10,6 +10,7 @@ rvm:
 matrix:
   allow_failures:
     - rvm:
+      - 2.4.0-preview3
       - jruby-head
       - ruby-head
       - rbx-2.1.1
