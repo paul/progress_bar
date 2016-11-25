@@ -4,11 +4,9 @@ rvm:
   - 2.3
   - 2.4.0-preview3
   - ruby-head
-  - jruby-head
 
 matrix:
   allow_failures:
     - rvm:
       - 2.4.0-preview3
-      - jruby-head
       - ruby-head
