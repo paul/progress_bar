@@ -1,5 +1,6 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
+# frozen_string_literal: true
+
+$:.push File.expand_path("lib", __dir__)
 require "progress_bar/version"
 
 Gem::Specification.new do |s|
@@ -9,13 +10,13 @@ Gem::Specification.new do |s|
   s.authors     = ["Paul Sadauskas"]
   s.email       = ["psadauskas@gmail.com"]
   s.homepage    = "http://github.com/paul/progress_bar"
-  s.summary     = %q{Simple Progress Bar for output to a terminal}
-  s.description = %q{Give people feedback about long-running tasks without overloading them with information: Use a progress bar, like Curl or Wget!}
+  s.summary     = "Simple Progress Bar for output to a terminal"
+  s.description = "Give people feedback about long-running tasks without overloading them with information: Use a progress bar, like Curl or Wget!"
 
   s.rubyforge_project = "progress_bar"
 
-  s.add_dependency('options', '~> 2.3.0')
-  s.add_dependency('highline', '~> 1.6')
+  s.add_dependency("highline", [">= 1.6", "< 3"])
+  s.add_dependency("options", "~> 2.3.0")
 
   s.add_development_dependency("rake")
   s.add_development_dependency("rspec")
