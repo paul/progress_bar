@@ -1,0 +1,6 @@
+
+# 1.3.0
+
+ * Relaxed highline gem requirement to allow highline 2.0 as well as 1.6+
+
+
