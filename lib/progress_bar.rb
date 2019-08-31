@@ -13,14 +13,15 @@ class ProgressBar
     close_character: "]"
   }
 
-  attr_accessor :count,
+  attr_accessor :bar_character,
+    :close_character,
+    :colour,
+    :count,
     :max,
     :meters,
-    :open_character,
-    :bar_character,
-    :close_character
+    :open_character
 
-  def initialize(max: 100, meters: DefaultMeters, characters: DefaultCharacters)
+  def initialize(max: 100, meters: DefaultMeters, characters: DefaultCharacters, colour: 0)
     @count           = 0
 
     @max             = max
@@ -31,6 +32,9 @@ class ProgressBar
     @open_character  = characters[:open_character]
     @bar_character   = characters[:bar_character]
     @close_character = characters[:close_character]
+
+    @colour          = colour
+    raise ArgumentError, "Colour must be a positive integer" unless @max >= 0
 
     @last_write      = ::Time.at(0)
     @start           = ::Time.now
@@ -49,6 +53,7 @@ class ProgressBar
 
   def write
     clear!
+
     print to_s
   end
 
@@ -86,9 +91,15 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    meters.inject("") do |text, meter|
+    progress_bar_text = meters.inject("") do |text, meter|
       text << render(meter) + " "
     end.strip
+
+    if colour > 0
+      "\e[#{colour}m#{progress_bar_text}\e[0m"
+    else
+      progress_bar_text
+    end
   end
 
   protected

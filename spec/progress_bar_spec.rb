@@ -42,4 +42,33 @@ describe 'ProgressBar bar output' do
     it { should == "[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
   end
 
+  describe 'with custom bar characters, |, █, |' do
+    before do
+      characters = {
+        open_character: "|",
+        bar_character: "█",
+        close_character: "|"
+      }
+
+      Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 0)
+      @progress_bar = ProgressBar.new(max: 100, characters: characters)
+      @progress_bar.stub(:terminal_width) { 60 }
+      @progress_bar.count = 100
+      Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 10) # 10 seconds later
+    end
+
+    it { should == "|██████████████| [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
+  end
+
+  describe 'with custom colours' do
+    before do
+      Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 0)
+      @progress_bar = ProgressBar.new(max: 100, colour: 32)
+      @progress_bar.stub(:terminal_width) { 60 }
+      @progress_bar.count = 100
+      Timecop.freeze Time.utc(2010, 3, 10, 0, 0, 10) # 10 seconds later
+    end
+
+    it { should == "\e[#{32}m#{"[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]"}\e[0m" }
+  end
 end
