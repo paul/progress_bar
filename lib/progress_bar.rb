@@ -6,23 +6,36 @@ class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  attr_accessor :count, :max, :meters
+  DefaultMeters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+  DefaultCharacters = {
+    open_character: "[",
+    bar_character: "#",
+    close_character: "]"
+  }
 
-  def initialize(*args)
+  attr_accessor :count,
+    :max,
+    :meters,
+    :open_character,
+    :bar_character,
+    :close_character
 
-    @count      = 0
-    @max        = 100
-    @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+  def initialize(max: 100, meters: DefaultMeters, characters: DefaultCharacters)
+    @count           = 0
 
-    @max        = args.shift if args.first.is_a? Numeric
+    @max             = max
     raise ArgumentError, "Max must be a positive integer" unless @max >= 0
 
-    @meters     = args unless args.empty?
+    @meters          = meters
 
-    @last_write = ::Time.at(0)
-    @start      = ::Time.now
+    @open_character  = characters[:open_character]
+    @bar_character   = characters[:bar_character]
+    @close_character = characters[:close_character]
 
-    @hl         = HighLine.new
+    @last_write      = ::Time.at(0)
+    @start           = ::Time.now
+
+    @hl              = HighLine.new
   end
 
   def increment!(count = 1)
@@ -98,12 +111,14 @@ class ProgressBar
 
   def render_bar
     return '' if bar_width < 2
+
     progress_width = (ratio * (bar_width - 2)).floor
     remainder_width = bar_width - 2 - progress_width
-    "[" +
-      "#" * progress_width +
+
+    open_character +
+      bar_character * progress_width +
       " " * remainder_width +
-    "]"
+    close_character
   end
 
   def render_counter
