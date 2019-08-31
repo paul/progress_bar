@@ -2,7 +2,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
 describe 'ProgressBar counter output' do
   before do
-    @progress_bar = ProgressBar.new(100, :counter)
+    @progress_bar = ProgressBar.new(max: 100, meters: [:counter])
   end
 
   subject { @progress_bar.to_s }
@@ -33,7 +33,7 @@ describe 'ProgressBar counter output' do
 
   describe 'with a shorter max' do
     before do
-      @progress_bar = ProgressBar.new(42, :counter)
+      @progress_bar = ProgressBar.new(max: 42, meters: [:counter])
     end
 
     it { should == '[ 0/42]' }
@@ -41,7 +41,7 @@ describe 'ProgressBar counter output' do
 
   describe 'with a longer max' do
     before do
-      @progress_bar = ProgressBar.new(4242, :counter)
+      @progress_bar = ProgressBar.new(max: 4242, meters: [:counter])
     end
 
     it { should == '[   0/4242]' }

@@ -4,7 +4,7 @@ describe 'ProgressBar bar output' do
   let(:max) { 100 }
   let(:terminal_width) { 12 }
 
-  let(:progress_bar) { ProgressBar.new(max, :bar) }
+  let(:progress_bar) { ProgressBar.new(max: max, meters: [:bar]) }
 
   before do
     progress_bar.stub(:terminal_width) { terminal_width }
@@ -52,4 +52,3 @@ describe 'ProgressBar bar output' do
   end
 
 end
-
