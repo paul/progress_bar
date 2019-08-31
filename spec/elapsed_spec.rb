@@ -43,5 +43,4 @@ describe 'ProgressBar elapsed output' do
 
     it { should == '[02:00:00]' }
   end
-
 end

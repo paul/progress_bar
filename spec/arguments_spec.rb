@@ -35,5 +35,4 @@ describe 'ProgressBar arguments' do
       bar = ProgressBar.new(max: -1)
     }.should raise_error(ProgressBar::ArgumentError)
   end
-
 end

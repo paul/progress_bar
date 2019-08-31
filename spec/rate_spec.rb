@@ -54,5 +54,4 @@ describe 'ProgressBar rate output' do
 
     it { should == '[   2.10/s]' }
   end
-
 end

@@ -39,5 +39,4 @@ describe 'ProgressBar percentage output' do
 
     it { should == '[ 50.00%]' }
   end
-
 end
