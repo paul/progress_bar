@@ -52,8 +52,13 @@ class ProgressBar
   end
 
   def log(text)
-    clear!
-    puts "#{text}\n" # need the newline here
+    clear! # carriage return
+
+    # need to over-write bar text
+    print text +
+      "" * (bar_width - text.size) +
+    "\n"
+
     print to_s
   end
 
