@@ -51,9 +51,14 @@ class ProgressBar
     end
   end
 
+  def log(text)
+    clear!
+    puts text # need the newline here
+    print to_s
+  end
+
   def write
     clear!
-
     print to_s
   end
 
