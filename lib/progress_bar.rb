@@ -56,7 +56,7 @@ class ProgressBar
 
     # need to over-write bar text
     print text +
-      "" * (bar_width - text.size) +
+      " " * (terminal_width - text.size) +
     "\n"
 
     print to_s
