@@ -42,7 +42,21 @@ it.*
 Usually, the defaults should be fine, the only thing you'll need to
 tweak is the max.
 
-    bar = ProgressBar.new(1000)
+    bar = ProgressBar.new(max: 1000)
+
+## Setting the Colour
+
+  bar = ProgressBar.new(colour: 32)
+
+## Setting the progress characters
+
+  characters = {
+    open_character: "▕",
+    bar_character: "█",
+    close_character: "▏"
+  }
+
+  bar = ProgressBar.new(characters: characters)
 
 ## Larger Steps
 
