@@ -46,17 +46,17 @@ tweak is the max.
 
 ## Setting the Colour
 
-  bar = ProgressBar.new(colour: 32)
+    bar = ProgressBar.new(colour: 32)
 
 ## Setting the progress characters
 
-  characters = {
-    open_character: "▕",
-    bar_character: "█",
-    close_character: "▏"
-  }
+    characters = {
+      open_character: "▕",
+      bar_character: "█",
+      close_character: "▏"
+    }
 
-  bar = ProgressBar.new(characters: characters)
+    bar = ProgressBar.new(characters: characters)
 
 ## Larger Steps
 
@@ -65,6 +65,9 @@ pass a number to `#increment!`
 
     bar.increment! 42
 
+## Logging above the progress bar
+
+    bar.log("Info: This is a log")
 
 ## Picking the meters
 
