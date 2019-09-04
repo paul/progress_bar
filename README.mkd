@@ -46,6 +46,9 @@ tweak is the max.
 
 ## Setting the Colour
 
+This uses ASCII colour codes. Between 1-50 works but not all numbers will have
+an effect. Between 30 - 49 are the usual console colours.
+
     bar = ProgressBar.new(colour: 32)
 
 ## Setting the progress characters
