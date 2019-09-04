@@ -42,7 +42,24 @@ it.*
 Usually, the defaults should be fine, the only thing you'll need to
 tweak is the max.
 
-    bar = ProgressBar.new(1000)
+    bar = ProgressBar.new(max: 1000)
+
+## Setting the Colour
+
+This uses ASCII colour codes. Between 1-50 works but not all numbers will have
+an effect. Between 30 - 49 are the usual console colours.
+
+    bar = ProgressBar.new(colour: 32)
+
+## Setting the progress characters
+
+    characters = {
+      open_character: "▕",
+      bar_character: "█",
+      close_character: "▏"
+    }
+
+    bar = ProgressBar.new(characters: characters)
 
 ## Larger Steps
 
@@ -51,6 +68,9 @@ pass a number to `#increment!`
 
     bar.increment! 42
 
+## Logging above the progress bar
+
+    bar.log("Info: This is a log")
 
 ## Picking the meters
 
