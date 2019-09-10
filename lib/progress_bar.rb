@@ -39,6 +39,10 @@ class ProgressBar
     end
   end
 
+  def available_styles
+    ProgressBar::Styles.available_styles
+  end
+
   def write
     clear!
     print to_s

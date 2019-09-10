@@ -51,6 +51,18 @@ pass a number to `#increment!`
 
     bar.increment! 42
 
+## Setting the Style
+
+The console style for the bar can be set as an optional parameter. Available
+styles can be found using `#available_styles`
+
+    bar.available_styles
+
+The style parameter can be set using a string, symbol or integer
+
+    bar = ProgressBar.new(style: :blue)
+    bar = ProgressBar.new(style: 'green')
+    bar = ProgressBar.new(style: 42)
 
 ## Picking the meters
 
