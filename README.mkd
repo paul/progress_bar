@@ -51,6 +51,12 @@ pass a number to `#increment!`
 
     bar.increment! 42
 
+## Logging above the progress bar
+
+If you want to print out to console without duplicating the progress bar you can
+pass the string to print out to `#log`
+
+    bar.log("Info: This is a log")
 
 ## Picking the meters
 
