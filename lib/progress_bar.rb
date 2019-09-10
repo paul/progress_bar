@@ -1,4 +1,3 @@
-
 require 'options'
 require 'highline'
 
@@ -6,18 +5,17 @@ class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  attr_accessor :count, :max, :meters
+  DefaultMeters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
-  def initialize(*args)
+  attr_accessor :count, :max, :meters, :bar, :delimiters
 
+  def initialize(max = 100, *meters, bar: '#', delimiters: '[]')
     @count      = 0
-    @max        = 100
-    @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    @max        = max
+  # TODO: check if max is a bar and set it
+    raise ArgumentError, "Max must be a positive integer" unless @max.is_a?(Integer) && @max >= 0
 
-    @max        = args.shift if args.first.is_a? Numeric
-    raise ArgumentError, "Max must be a positive integer" unless @max >= 0
-
-    @meters     = args unless args.empty?
+    @meters     = meters.empty? ? DefaultMeters : meters
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
