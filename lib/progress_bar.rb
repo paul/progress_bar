@@ -19,10 +19,10 @@ class ProgressBar
     @meters     = args.empty? ? DefaultMeters : args
 
     @bar        = bar
-    raise ArgumentError, 'Bar must be a single character' unless @bar.size == 1
+    raise ArgumentError, 'Bar must be a single character' unless @bar&.size == 1
 
     @delimiters = delimiters
-    unless @delimiters.size == 2
+    unless @delimiters&.size == 2
       raise ArgumentError, 'Delimiters must be two characters'
     end
 
