@@ -34,6 +34,11 @@ class ProgressBar
     end
   end
 
+  def log(text)
+    clear!
+    print log_s(text)
+  end
+
   def write
     clear!
     print to_s
@@ -76,6 +81,11 @@ class ProgressBar
     meters.inject("") do |text, meter|
       text << render(meter) + " "
     end.strip
+  end
+
+  def log_s(text)
+    # need to over-write entire progress-bar text
+    text + (' ' * clear_width(text)) + "\n" + to_s
   end
 
   protected
@@ -179,6 +189,14 @@ class ProgressBar
 
   def max_width
     max.to_s.length
+  end
+
+  def clear_width(text)
+    if text.size < terminal_width # text does not overflow terminal line
+      terminal_width - text.size
+    else # If its 0 then " " will be multiplied by zero
+      text.size - terminal_width
+    end
   end
 
   def format_interval(interval)
