@@ -9,13 +9,20 @@ class ProgressBar
 
   attr_accessor :count, :max, :meters, :bar, :delimiters
 
-  def initialize(max = 100, *meters, bar: '#', delimiters: '[]')
+  def initialize(*args, bar: '#', delimiters: '[]')
     @count      = 0
-    @max        = max
-  # TODO: check if max is a bar and set it
-    raise ArgumentError, "Max must be a positive integer" unless @max.is_a?(Integer) && @max >= 0
+    @max        = 100
 
-    @meters     = meters.empty? ? DefaultMeters : meters
+    @max        = args.shift if args.first.is_a? Numeric
+    raise ArgumentError, 'Max must be a positive integer' unless @max >= 0
+
+    @meters     = args.empty? ? DefaultMeters : args
+
+    @bar        = bar
+    raise ArgumentError, 'Bar must be a single character' unless @bar.size == 1
+
+    @delimiters = delimiters
+    raise ArgumentError, 'Delimiters must be two characters' unless @delimiters.size == 2
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
@@ -71,8 +78,8 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    meters.inject("") do |text, meter|
-      text << render(meter) + " "
+    meters.inject('') do |text, meter|
+      text << render(meter) + ' '
     end.strip
   end
 
@@ -96,12 +103,14 @@ class ProgressBar
 
   def render_bar
     return '' if bar_width < 2
+
     progress_width = (ratio * (bar_width - 2)).floor
     remainder_width = bar_width - 2 - progress_width
-    "[" +
-      "#" * progress_width +
-      " " * remainder_width +
-    "]"
+
+    delimiters[0] +
+      bar * progress_width +
+      ' ' * remainder_width +
+      delimiters[-1]
   end
 
   def render_counter
@@ -186,7 +195,6 @@ class ProgressBar
       "%02i:%02i" % [interval/60, interval%60]
     end
   end
-
 end
 
 require_relative 'progress_bar/with_progress'
