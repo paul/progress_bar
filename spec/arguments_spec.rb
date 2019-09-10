@@ -30,11 +30,36 @@ describe 'ProgressBar arguments' do
     bar.meters.should == [:bar, :eta]
   end
 
+  it 'should allow specifying the style as a string' do
+    bar = ProgressBar.new(style: 'green')
+    bar.style.should == 32
+  end
+
+  it 'should allow specifying the style as a symbol' do
+    bar = ProgressBar.new(style: :green)
+    bar.style.should == 32
+  end
+
+  it 'should allow specifying the style as a integer' do
+    bar = ProgressBar.new(style: 32)
+    bar.style.should == 32
+  end
+
   it "should raise an error when initial max is nonsense" do
     lambda {
       bar = ProgressBar.new(-1)
     }.should raise_error(ProgressBar::ArgumentError)
   end
 
-end
+  it 'should raise an error when style is invalid' do
+    lambda {
+      _bar = ProgressBar.new(style: 'magic_rainbow')
+    }.should raise_error(ProgressBar::ArgumentError)
+  end
 
+  it 'should raise an error when style is empty' do
+    lambda {
+      _bar = ProgressBar.new(style: '')
+    }.should raise_error(ProgressBar::ArgumentError)
+  end
+end
