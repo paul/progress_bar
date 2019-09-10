@@ -6,9 +6,9 @@ class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  attr_accessor :count, :max, :meters
+  attr_accessor :count, :max, :meters, :style
 
-  def initialize(*args)
+  def initialize(*args, style: 0)
 
     @count      = 0
     @max        = 100
@@ -18,6 +18,11 @@ class ProgressBar
     raise ArgumentError, "Max must be a positive integer" unless @max >= 0
 
     @meters     = args unless args.empty?
+
+    @style      = ProgressBar::Styles.process(style)
+    unless @style
+      raise ArgumentError, 'Style must be present in #available_styles'
+    end
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
@@ -73,9 +78,16 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    meters.inject("") do |text, meter|
-      text << render(meter) + " "
+
+    progress_bar_text = meters.inject('') do |text, meter|
+      text << render(meter) + ' '
     end.strip
+
+    if style > 0
+      "\e[#{style}m#{progress_bar_text}\e[0m"
+    else
+      progress_bar_text
+    end
   end
 
   protected
@@ -188,7 +200,7 @@ class ProgressBar
       "%02i:%02i" % [interval/60, interval%60]
     end
   end
-
 end
 
 require_relative 'progress_bar/with_progress'
+require_relative 'progress_bar/styles'
