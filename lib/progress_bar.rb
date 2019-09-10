@@ -22,7 +22,9 @@ class ProgressBar
     raise ArgumentError, 'Bar must be a single character' unless @bar.size == 1
 
     @delimiters = delimiters
-    raise ArgumentError, 'Delimiters must be two characters' unless @delimiters.size == 2
+    unless @delimiters.size == 2
+      raise ArgumentError, 'Delimiters must be two characters'
+    end
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
