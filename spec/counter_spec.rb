@@ -46,5 +46,4 @@ describe 'ProgressBar counter output' do
 
     it { should == '[   0/4242]' }
   end
-
 end
