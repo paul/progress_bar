@@ -1,0 +1,51 @@
+---
+exclude_paths:
+  - bin
+
+detectors:
+  UtilityFunction:
+    public_methods_only: true
+
+  TooManyStatements:
+    exclude:
+      - initialize
+    max_statements: 8
+
+  RepeatedConditional:
+    max_ifs: 4
+
+  LongParameterList:
+    exclude:
+      - initialize
+
+  # This one just makes sure the Class/Module has a comment. Dumb.
+  IrresponsibleModule:
+    enabled: false
+
+  # Transaction result blocks are 3-deep
+  NestedIterators:
+    max_allowed_nesting: 3
+
+  UncommunicativeVariableName:
+    accept:
+      - i     # array index
+      - c     # config
+      - k     # key
+      - v     # value
+      - h     # hash initializer (Hash.new { |h,k| h[k] = Hash.new })
+      - "_"
+  UncommunicativeModuleName:
+    accept:
+      - Auth0
+
+  # AS::Subscriber objects tend to rely heavily on `event` and `payload`, so its
+  # hard to avoid "Feature Envy", but is perfectly readable.
+  FeatureEnvy:
+    enabled: false
+
+directories:
+  "spec/support":
+    UtilityFunction:
+      enabled: false
+
+# vi:syntax=yaml
