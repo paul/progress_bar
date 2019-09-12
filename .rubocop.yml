@@ -1,0 +1,113 @@
+---
+inherit_from:
+  - https://relaxed.ruby.style/rubocop.yml
+
+require:
+  - rubocop-rspec
+
+Rails:
+  Enabled: true
+
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  TargetRubyVersion: 2.6
+
+  Exclude:
+    - "vendor/**/*"
+    - "spec/fixtures/**/*"
+    - "bin/**/*"
+    - "script/**/*"
+    - "tmp/**/*"
+
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*"  # `expect { }.to change { }` is fine
+Lint/ShadowingOuterLocalVariable:
+  # Shadowing outer local variables with block parameters is often useful to
+  # not reinvent a new name for the same thing, it highlights the relation
+  # between the outer variable and the parameter. The cases where it's actually
+  # confusing are rare, and usually bad for other reasons already, for example
+  # because the method is too long.
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - Gemfile
+    - Guardfile
+    - shared_context
+    - feature
+  ExcludedMethods:
+    - configure
+    - context
+    - define
+    - describe
+    - factory
+    - it
+    - namespace
+    - specify
+    - task
+    - shared_examples_for
+    - shared_context
+    - feature
+    - define_type
+Metrics/LineLength:
+  Enabled: true
+  Max: 120
+Metrics/ClassLength:
+  Exclude:
+    - "spec/**/*_spec.rb"
+Naming/RescuedExceptionsVariableName:
+  PreferredName: ex
+Naming/FileName:
+  Enabled: false
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+Style/EmptyLiteral:
+  Enabled: false
+Style/FormatStringToken:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: true
+Style/HashSyntax:
+  Exclude:
+    - lib/tasks/**/*.rake
+Style/NumericLiterals:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+Style/SymbolArray:
+  MinSize: 4
+
+# Rspec
+Capybara/FeatureMethods:
+  Enabled: false
+RSpec/ContextWording:
+  Enabled: false
+RSpec/DescribeClass:
+  Enabled: false
+RSpec/DescribedClass:
+  Enabled: false
+RSpec/ExampleLength:
+  Max: 10
+RSpec/ExampleWording:
+  Enabled: false
+RSpec/ExpectChange:
+  EnforcedStyle: block
+RSpec/ImplicitExpect:
+  Enabled: false
+RSpec/LeadingSubject:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Max: 4
+RSpec/NestedGroups:
+  Max: 4
+RSpec/NotToNot:
+  Enabled: false
+RSpec/ExpectInHook:
+  Enabled: false
+RSpec/LetSetup:
+  Enabled: false

@@ -19,7 +19,10 @@ Gem::Specification.new do |s|
   s.add_dependency("options", "~> 2.3.0")
 
   s.add_development_dependency("rake")
+  s.add_development_dependency("reek")
   s.add_development_dependency("rspec")
+  s.add_development_dependency("rubocop")
+  s.add_development_dependency("rubocop-rspec")
   s.add_development_dependency("timecop")
 
   s.files         = `git ls-files`.split("\n")
