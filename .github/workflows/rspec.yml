@@ -1,0 +1,26 @@
+---
+name: Test
+"on": [pull_request]
+jobs:
+  rspec:
+    name: RSpec
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby:
+          - 2.4
+          - 2.5
+          - 2.6
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install dependencies
+        run: |
+          gem install bundler --no-document
+          bundle install
+
+      - name: RSpec
+        run: |
+          rspec
