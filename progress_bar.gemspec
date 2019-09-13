@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Paul Sadauskas"]
   s.email       = ["psadauskas@gmail.com"]
   s.homepage    = "http://github.com/paul/progress_bar"
+  s.license     = "WTFPL"
   s.summary     = "Simple Progress Bar for output to a terminal"
   s.description = "Give people feedback about long-running tasks without overloading them with information: Use a progress bar, like Curl or Wget!"
 
