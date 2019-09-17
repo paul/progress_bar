@@ -2,22 +2,47 @@
 
 require "options"
 require "highline"
+require "unicode/display_width"
 
 class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  attr_accessor :count, :max, :meters
+  Theme = Struct.new(:bar_element,
+                     :delimiter,
+                     :open_delimiter,
+                     :close_delimiter,
+                     :line_prefix,
+                     :line_suffix,
+                     keyword_init: true) do
+    def initialize(bar_element: "#", delimiter: ["[", "]"], line_prefix: "", line_suffix: "")
+      super
+    end
 
-  def initialize(*args)
-    @count      = 0
-    @max        = 100
-    @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+    def open_delimiter
+      @open_delimiter ||= delimiter.is_a?(Array) ? delimiter.first : delimiter
+    end
 
-    @max = args.shift if args.first.is_a? Numeric
+    def close_delimiter
+      @close_delimiter ||= delimiter.is_a?(Array) ? delimiter.last : delimiter
+    end
+  end
+
+  attr_accessor :count, :max, :meters, :theme
+
+  DEFAULT_METERS = [:bar, :counter, :percentage, :elapsed, :eta, :rate].freeze
+  DEFAULT_THEME = Theme.new(
+    bar_element: "#",
+    delimiter:   %w([ ])
+  )
+
+  def initialize(*args, theme: DEFAULT_THEME)
+    @count  = 0
+    @max    = args.first.is_a?(Integer) ? args.shift : 100
+    @meters = args.empty? ? DEFAULT_METERS : args
+    @theme  = theme
+
     raise ArgumentError, "Max must be a positive integer" unless @max >= 0
-
-    @meters = args unless args.empty?
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
@@ -73,9 +98,11 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    meters.inject(String.new) do |text, meter|
-      text << render(meter) + " "
-    end.strip
+    (theme.line_prefix.respond_to?(:call) ? theme.line_prefix.call(self) : theme.line_prefix) +
+      meters.inject(String.new) do |text, meter|
+        text << render(meter) + " "
+      end.strip +
+      theme.line_suffix
   end
 
   protected
@@ -96,36 +123,48 @@ class ProgressBar
     send(:"#{meter}_width")
   end
 
+  def render_meter(content)
+    theme.open_delimiter + content + theme.close_delimiter
+  end
+
   def render_bar
     return "" if bar_width < 2
 
     progress_width = (ratio * (bar_width - 2)).floor
-    remainder_width = bar_width - 2 - progress_width
-    "[" +
-      "#" * progress_width +
-      " " * remainder_width +
-      "]"
+    bar = if theme.bar_element.respond_to?(:call)
+            text = String.new
+            length = 0
+            until length >= progress_width
+              text << theme.bar_element.call(self, length, progress_width, bar_width)
+              length = Unicode::DisplayWidth.of(text)
+            end
+            text
+          else
+            theme.bar_element * progress_width
+    end
+    remainder_width = bar_width - 2 - Unicode::DisplayWidth.of(bar)
+    render_meter(bar + " " * remainder_width)
   end
 
   def render_counter
-    "[%#{max_width}i/%i]" % [count, max]
+    render_meter("%#{max_width}i/%i" % [count, max])
   end
 
   def render_percentage
     format = (max == 100 ? "%3i" : "%6.2f")
-    "[#{format}%%]" % percentage
+    render_meter("#{format}%%" % percentage)
   end
 
   def render_elapsed
-    "[#{format_interval(elapsed)}]"
+    render_meter(format_interval(elapsed).to_s)
   end
 
   def render_eta
-    "[#{format_interval(eta)}]"
+    render_meter(format_interval(eta).to_s)
   end
 
   def render_rate
-    "[%#{max_width + 3}.2f/s]" % rate
+    render_meter("%#{max_width + 3}.2f/s" % rate)
   end
 
   def terminal_width
