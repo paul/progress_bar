@@ -110,3 +110,20 @@ require 'progress_bar/core_ext/enumerable_with_progress'
 
 (1..400).with_progress.select{|i| (i % 2).zero?}
 ```
+
+## Using prefix and suffix overrides to add styling to the progress bar
+
+If you want to change the style of the progress bar such as its color you can
+do so by using the prefix and suffix modifiers
+
+Let's say you want to the progress_bar to be inverted green which has the style
+code 42, then initialize the progress bar:
+
+```ruby
+style_code = 42
+bar = ProgressBar.new(100, prefix: "\e[#{style_code}m", suffix: "\e[0m")
+```
+
+### Some examples of ASCII styles you can apply
+
+![style_examples](example_ascii_styles.png)

@@ -42,6 +42,13 @@ describe 'ProgressBar bar output' do
     it { should == "[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
   end
 
+  describe 'at count=100 with style prefix and suffix' do
+    before do
+      @progress_bar.count = 100
+      @progress_bar.prefix = "\e[42m"
+      @progress_bar.suffix = "\e[0m"
+    end
+
+    it { should == "\e[42m[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]\e[0m" }
+  end
 end
-
-
