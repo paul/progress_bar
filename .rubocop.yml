@@ -74,6 +74,7 @@ Style/FrozenStringLiteralComment:
 Style/HashSyntax:
   Exclude:
     - lib/tasks/**/*.rake
+    - Rakefile
 Style/NumericLiterals:
   Enabled: false
 Style/StringLiterals:

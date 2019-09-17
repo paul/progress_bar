@@ -1,6 +1,8 @@
-require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
+# frozen_string_literal: true
 
-describe 'ProgressBar bar output' do
+require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+
+describe "ProgressBar bar output" do
   let(:max) { 100 }
   let(:terminal_width) { 12 }
 
@@ -13,25 +15,25 @@ describe 'ProgressBar bar output' do
 
   subject { progress_bar.to_s }
 
-  describe 'at count=0' do
+  describe "at count=0" do
     let(:count) { 0 }
 
     it { should == "[          ]" }
   end
 
-  describe 'at count=50' do
+  describe "at count=50" do
     let(:count) { 50 }
 
     it { should == "[#####     ]" }
   end
 
-  describe 'at count=100' do
+  describe "at count=100" do
     let(:count) { 100 }
 
     it { should == "[##########]" }
   end
 
-  describe 'at count=25 (non-integer divide, should round down)' do
+  describe "at count=25 (non-integer divide, should round down)" do
     let(:count) { 25 }
 
     it { should == "[##        ]" }
@@ -50,6 +52,4 @@ describe 'ProgressBar bar output' do
       end
     end
   end
-
 end
-

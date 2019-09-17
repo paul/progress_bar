@@ -1,6 +1,8 @@
-require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
+# frozen_string_literal: true
 
-describe 'ProgressBar arguments' do
+require_relative "spec_helper"
+
+describe "ProgressBar arguments" do
   before do
     @default_max = 100
     @default_meters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
@@ -35,6 +37,4 @@ describe 'ProgressBar arguments' do
       bar = ProgressBar.new(-1)
     }.should raise_error(ProgressBar::ArgumentError)
   end
-
 end
-
