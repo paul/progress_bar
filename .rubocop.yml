@@ -6,7 +6,7 @@ require:
   - rubocop-rspec
 
 Rails:
-  Enabled: true
+  Enabled: false
 
 AllCops:
   DisplayCopNames: true
