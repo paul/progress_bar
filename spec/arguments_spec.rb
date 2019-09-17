@@ -42,9 +42,9 @@ describe 'ProgressBar arguments' do
     }.should raise_error(ProgressBar::ArgumentError)
   end
 
-  it 'should raise an error when bar is more than one character' do
+  it 'should raise an error when bar is not a string' do
     lambda {
-      _bar = ProgressBar.new(bar: 'abc')
+      _bar = ProgressBar.new(bar: 5)
     }.should raise_error(ProgressBar::ArgumentError)
   end
 

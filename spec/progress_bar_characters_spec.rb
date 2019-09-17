@@ -41,4 +41,13 @@ describe 'ProgressBar bar output with custom characters' do
 
     it { should == '▕██████████████▏ [100/100] [100%] [00:10] [00:00] [ 10.00/s]' }
   end
+
+  describe 'at count=100 with a multi-sequence emoji' do
+    before do
+      @progress_bar.count = 100
+      @progress_bar.bar = "🏴‍☠️"
+    end
+
+    it { should == '▕🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️▏ [100/100] [100%] [00:10] [00:00] [ 10.00/s]' }
+  end
 end

@@ -18,8 +18,8 @@ class ProgressBar
 
     @meters     = args.empty? ? DEFAULT_METERS : args
 
-    @bar        = bar
-    raise ArgumentError, 'Bar must be a single character' unless @bar&.size == 1
+    @bar        = bar # can be an emoji which itself can be a sequence of characters
+    raise ArgumentError, 'Bar must be a valid string' unless @bar&.is_a?(String)
 
     @delimiters = delimiters
     unless @delimiters&.size == 2
