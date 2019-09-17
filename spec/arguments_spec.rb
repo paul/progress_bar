@@ -19,8 +19,8 @@ describe 'ProgressBar arguments' do
   end
 
   it "should allow prefix and suffix arguments and set their instance variables" do
-    bar = ProgressBar.new(prefix: "\e[42", suffix: "\e[0m")
-    bar.prefix.should == "\e[42"
+    bar = ProgressBar.new(prefix: "\e[42m", suffix: "\e[0m")
+    bar.prefix.should == "\e[42m"
     bar.suffix.should == "\e[0m"
   end
 

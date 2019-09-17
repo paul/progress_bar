@@ -121,7 +121,7 @@ code 42, then initialize the progress bar:
 
 ```ruby
 style_code = 42
-bar = ProgressBar.new(100, prefix: "\e[#{style_code}", suffix: "\e[0m")
+bar = ProgressBar.new(100, prefix: "\e[#{style_code}m", suffix: "\e[0m")
 ```
 
 ### Some examples of ASCII styles you can apply
