@@ -18,6 +18,12 @@ describe 'ProgressBar arguments' do
     bar.meters.should == @default_meters
   end
 
+  it "should allow prefix and suffix arguments and set their instance variables" do
+    bar = ProgressBar.new(prefix: "\e[42", suffix: "\e[0m")
+    bar.prefix.should == "\e[42"
+    bar.suffix.should == "\e[0m"
+  end
+
   it "should allow specifying just the meters" do
     bar = ProgressBar.new(:bar, :eta)
     bar.max.should == @default_max
@@ -36,5 +42,15 @@ describe 'ProgressBar arguments' do
     }.should raise_error(ProgressBar::ArgumentError)
   end
 
-end
+  it "should raise an error when initial prefix is nonsense" do
+    lambda {
+      bar = ProgressBar.new(prefix: 200)
+    }.should raise_error(ProgressBar::ArgumentError)
+  end
 
+  it "should raise an error when initial suffix is nonsense" do
+    lambda {
+      bar = ProgressBar.new(suffix: 200)
+    }.should raise_error(ProgressBar::ArgumentError)
+  end
+end

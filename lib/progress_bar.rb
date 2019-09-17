@@ -6,9 +6,10 @@ class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  attr_accessor :count, :max, :meters
+  attr_accessor :count, :max, :meters, :prefix, :suffix
+  attr_reader :terminal_width # Useful for prefix and suffix changes
 
-  def initialize(*args)
+  def initialize(*args, prefix: nil, suffix: nil)
 
     @count      = 0
     @max        = 100
@@ -18,6 +19,12 @@ class ProgressBar
     raise ArgumentError, "Max must be a positive integer" unless @max >= 0
 
     @meters     = args unless args.empty?
+
+    raise ArgumentError, 'Prefix must be a valid string' unless prefix.nil? || prefix.is_a?(String)
+    @prefix = prefix
+
+    raise ArgumentError, 'Suffix must be a valid string' unless suffix.nil? || suffix.is_a?(String)
+    @suffix = suffix
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
@@ -73,9 +80,12 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    meters.inject("") do |text, meter|
+
+    progress_bar_text = meters.inject("") do |text, meter|
       text << render(meter) + " "
     end.strip
+
+    "#{prefix}#{progress_bar_text}#{suffix}"
   end
 
   protected
