@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Paul Sadauskas"]
   s.email       = ["psadauskas@gmail.com"]
   s.homepage    = "http://github.com/paul/progress_bar"
+  s.license     = "WTFPL"
   s.summary     = "Simple Progress Bar for output to a terminal"
   s.description = "Give people feedback about long-running tasks without overloading them with information: Use a progress bar, like Curl or Wget!"
 
@@ -19,7 +20,10 @@ Gem::Specification.new do |s|
   s.add_dependency("options", "~> 2.3.0")
 
   s.add_development_dependency("rake")
+  s.add_development_dependency("reek")
   s.add_development_dependency("rspec")
+  s.add_development_dependency("rubocop")
+  s.add_development_dependency("rubocop-rspec")
   s.add_development_dependency("timecop")
 
   s.files         = `git ls-files`.split("\n")
