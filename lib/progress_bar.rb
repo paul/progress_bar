@@ -5,7 +5,7 @@ class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  DefaultMeters = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
+  DEFAULT_METERS = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
   attr_accessor :count, :max, :meters, :bar, :delimiters
 
@@ -14,9 +14,9 @@ class ProgressBar
     @max        = 100
 
     @max        = args.shift if args.first.is_a? Numeric
-    raise ArgumentError, 'Max must be a positive integer' unless @max >= 0
+    raise ArgumentError, "Max must be a positive integer" unless @max >= 0
 
-    @meters     = args.empty? ? DefaultMeters : args
+    @meters     = args.empty? ? DEFAULT_METERS : args
 
     @bar        = bar
     raise ArgumentError, 'Bar must be a single character' unless @bar&.size == 1
