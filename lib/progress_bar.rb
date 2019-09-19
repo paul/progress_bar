@@ -2,39 +2,18 @@
 
 require "options"
 require "highline"
-require "unicode/display_width"
+require "unicode/display_width/no_string_ext"
+
+require_relative "progress_bar/theme"
 
 class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  Theme = Struct.new(:bar_element,
-                     :delimiter,
-                     :open_delimiter,
-                     :close_delimiter,
-                     :line_prefix,
-                     :line_suffix,
-                     keyword_init: true) do
-    def initialize(bar_element: "#", delimiter: ["[", "]"], line_prefix: "", line_suffix: "")
-      super
-    end
-
-    def open_delimiter
-      @open_delimiter ||= delimiter.is_a?(Array) ? delimiter.first : delimiter
-    end
-
-    def close_delimiter
-      @close_delimiter ||= delimiter.is_a?(Array) ? delimiter.last : delimiter
-    end
-  end
-
   attr_accessor :count, :max, :meters, :theme
 
   DEFAULT_METERS = [:bar, :counter, :percentage, :elapsed, :eta, :rate].freeze
-  DEFAULT_THEME = Theme.new(
-    bar_element: "#",
-    delimiter:   %w([ ])
-  )
+  DEFAULT_THEME = Theme.new
 
   def initialize(*args, theme: DEFAULT_THEME)
     @count  = 0
@@ -98,11 +77,15 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    (theme.line_prefix.respond_to?(:call) ? theme.line_prefix.call(self) : theme.line_prefix) +
+    theme.render_element(:line_prefix, self) +
       meters.inject(String.new) do |text, meter|
         text << render(meter) + " "
       end.strip +
-      theme.line_suffix
+      theme.render_element(:line_suffix, self)
+  end
+
+  def display_width(text)
+    Unicode::DisplayWidth.of(text, 1, {}, emoji: true)
   end
 
   protected
@@ -124,25 +107,22 @@ class ProgressBar
   end
 
   def render_meter(content)
-    theme.open_delimiter + content + theme.close_delimiter
+    theme.render_element(:open_delimiter, self) +
+      content +
+      theme.render_element(:close_delimiter, self)
   end
 
   def render_bar
     return "" if bar_width < 2
 
     progress_width = (ratio * (bar_width - 2)).floor
-    bar = if theme.bar_element.respond_to?(:call)
-            text = String.new
-            length = 0
-            until length >= progress_width
-              text << theme.bar_element.call(self, length, progress_width, bar_width)
-              length = Unicode::DisplayWidth.of(text)
-            end
-            text
-          else
-            theme.bar_element * progress_width
+    bar = String.new
+    length = 0
+    until length >= progress_width
+      bar << theme.render_element(:bar_element, self, pos: length, width: progress_width)
+      length = display_width(bar)
     end
-    remainder_width = bar_width - 2 - Unicode::DisplayWidth.of(bar)
+    remainder_width = [bar_width - 2 - display_width(bar), 0].max
     render_meter(bar + " " * remainder_width)
   end
 

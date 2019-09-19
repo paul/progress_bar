@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "awesome_print"
-require "unicode/display_width"
 require "paint"
 
 require_relative "../lib/progress_bar"
@@ -18,12 +16,12 @@ def self.rainbow(ratio)
 end
 
 theme = ProgressBar::Theme.new(
-  line_prefix: ->(bar) {
+  line_prefix: ->(bar, **) {
     color = rainbow(bar.ratio * 6)
-    Paint.color(nil, color)
+    Paint.color(color)
   },
-  bar_element: ->(_bar, i, progress, _width) {
-    if i + Unicode::DisplayWidth.of(CAT) >= progress
+  bar_element: ->(bar, pos:, width:) {
+    if pos + bar.display_width(CAT) >= width
       CAT
     else
       RAINBOW
@@ -35,5 +33,5 @@ bar = ProgressBar.new(100, theme: theme)
 
 100.times do
   bar.increment!
-  sleep 0.05
+  sleep 0.1
 end
