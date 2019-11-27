@@ -110,3 +110,9 @@ require 'progress_bar/core_ext/enumerable_with_progress'
 
 (1..400).with_progress.select{|i| (i % 2).zero?}
 ```
+
+If you want to display only specific meters you can do it like so:
+
+```ruby
+(1..400).with_progress(:bar, :elapsed).select{|i| (i % 2).zero?}
+```
