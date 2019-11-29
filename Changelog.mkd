@@ -1,3 +1,7 @@
+# 1.3.1
+
+ * Added support for passing bar options to `Enumerable#with_progress`
+   extension.
 
 # 1.3.0
 
