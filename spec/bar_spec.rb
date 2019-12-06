@@ -50,6 +50,4 @@ describe 'ProgressBar bar output' do
       end
     end
   end
-
 end
-

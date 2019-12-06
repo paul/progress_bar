@@ -41,7 +41,4 @@ describe 'ProgressBar bar output' do
 
     it { should == "[##############] [100/100] [100%] [00:10] [00:00] [ 10.00/s]" }
   end
-
 end
-
-

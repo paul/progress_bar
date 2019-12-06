@@ -1,4 +1,3 @@
-
 require 'options'
 require 'highline'
 
@@ -6,18 +5,26 @@ class ProgressBar
   Error = Class.new(StandardError)
   ArgumentError = Class.new(Error)
 
-  attr_accessor :count, :max, :meters
+  DEFAULT_METERS = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
-  def initialize(*args)
+  attr_accessor :count, :max, :meters, :bar, :delimiters
 
+  def initialize(*args, bar: '#', delimiters: '[]')
     @count      = 0
     @max        = 100
-    @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
     @max        = args.shift if args.first.is_a? Numeric
     raise ArgumentError, "Max must be a positive integer" unless @max >= 0
 
-    @meters     = args unless args.empty?
+    @meters     = args.empty? ? DEFAULT_METERS : args
+
+    @bar        = bar # can be an emoji which itself can be a sequence of characters
+    raise ArgumentError, 'Bar must be a valid string' unless @bar&.is_a?(String)
+
+    @delimiters = delimiters
+    unless @delimiters&.size == 2
+      raise ArgumentError, 'Delimiters must be two characters'
+    end
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
@@ -73,8 +80,8 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    meters.inject("") do |text, meter|
-      text << render(meter) + " "
+    meters.inject('') do |text, meter|
+      text << render(meter) + ' '
     end.strip
   end
 
@@ -98,12 +105,14 @@ class ProgressBar
 
   def render_bar
     return '' if bar_width < 2
+
     progress_width = (ratio * (bar_width - 2)).floor
     remainder_width = bar_width - 2 - progress_width
-    "[" +
-      "#" * progress_width +
-      " " * remainder_width +
-    "]"
+
+    delimiters[0] +
+      bar * progress_width +
+      ' ' * remainder_width +
+      delimiters[-1]
   end
 
   def render_counter
@@ -188,7 +197,6 @@ class ProgressBar
       "%02i:%02i" % [interval/60, interval%60]
     end
   end
-
 end
 
 require_relative 'progress_bar/with_progress'

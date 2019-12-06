@@ -1,4 +1,3 @@
-
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
 describe 'ProgressBar elapsed output' do
@@ -43,6 +42,4 @@ describe 'ProgressBar elapsed output' do
 
     it { should == '[02:00:00]' }
   end
-
 end
-

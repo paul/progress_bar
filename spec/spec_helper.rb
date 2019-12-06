@@ -1,4 +1,3 @@
-
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib/progress_bar'))
 
 require 'rspec'
@@ -9,4 +8,3 @@ RSpec.configure do |cfg|
     Timecop.return
   end
 end
-

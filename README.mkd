@@ -20,7 +20,6 @@ lots of progress bar alternatives, and we thank you for using ProgressBar!
 
 ## The Easy Way
 
-
     require 'progress_bar'
     bar = ProgressBar.new
 
@@ -39,10 +38,15 @@ it.*
 
 ## Setting the Max
 
-Usually, the defaults should be fine, the only thing you'll need to
-tweak is the max.
-
     bar = ProgressBar.new(1000)
+
+## Setting the progress bar characters
+
+By default, ProgressBar will use a default bar character to show progress and
+side delimiters. You can set any valid character that is supported by your
+terminal for either the bar character or the delimiters.
+
+    bar = ProgressBar.new(bar: '█', delimiters: '||')
 
 ## Larger Steps
 
