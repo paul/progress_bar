@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 class ProgressBar
   module WithProgress
     def each_with_progress(*args, &block)
       bar = ProgressBar.new(count, *args)
       if block
-        each{|obj| yield(obj).tap{bar.increment!}}
+        each{ |obj| yield(obj).tap{ bar.increment! } }
       else
-        Enumerator.new{|yielder|
-          self.each do |obj|
-            (yielder << obj).tap{bar.increment!}
+        Enumerator.new{ |yielder|
+          each do |obj|
+            (yielder << obj).tap{ bar.increment! }
           end
         }
       end

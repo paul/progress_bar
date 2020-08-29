@@ -5,12 +5,10 @@ inherit_from:
 require:
   - rubocop-rspec
 
-Rails:
-  Enabled: true
-
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
+  NewCops: enable
   TargetRubyVersion: 2.6
 
   Exclude:
@@ -20,7 +18,7 @@ AllCops:
     - "script/**/*"
     - "tmp/**/*"
 
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
 Lint/AmbiguousBlockAssociation:
@@ -53,7 +51,7 @@ Metrics/BlockLength:
     - shared_context
     - feature
     - define_type
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: true
   Max: 120
 Metrics/ClassLength:
@@ -63,7 +61,7 @@ Naming/RescuedExceptionsVariableName:
   PreferredName: ex
 Naming/FileName:
   Enabled: false
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Enabled: false
 Style/EmptyLiteral:
   Enabled: false
