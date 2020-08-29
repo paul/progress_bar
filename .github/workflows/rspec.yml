@@ -8,11 +8,12 @@ jobs:
     strategy:
       matrix:
         ruby:
-          - 2.4
-          - 2.5
-          - 2.6
+          - 2.4.x
+          - 2.5.x
+          - 2.6.x
+          - 2.7.x
     steps:
-      - uses: actions/checkout@v1.0.0
+      - uses: actions/checkout@v1
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
