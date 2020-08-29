@@ -1,4 +1,5 @@
+# frozen_string_literal: true
 
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib/progress_bar/enumerable'))
+require_relative "../lib/progress_bar/core_ext/enumerable_with_progress"
 
-p (20...34).with_progress.select{|i| sleep 0.1; (i % 2).zero?}
+(20...34).with_progress.select{ |i| sleep 0.1; (i % 2).zero? }

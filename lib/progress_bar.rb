@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 
-require 'options'
-require 'highline'
+require "options"
+require "highline"
 
 class ProgressBar
   Error = Class.new(StandardError)
@@ -9,26 +10,27 @@ class ProgressBar
   attr_accessor :count, :max, :meters
 
   def initialize(*args)
-
     @count      = 0
     @max        = 100
     @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
 
-    @max        = args.shift if args.first.is_a? Numeric
+    @max = args.shift if args.first.is_a? Numeric
     raise ArgumentError, "Max must be a positive integer" unless @max >= 0
 
-    @meters     = args unless args.empty?
+    @meters = args unless args.empty?
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
 
-    @hl         = HighLine.new
+    @hl = HighLine.new
+    @terminal_width = 80
+    @last_width_adjustment = Time.at(0)
   end
 
   def increment!(count = 1)
-    self.count += count
+    @count += count
     now = ::Time.now
-    if (now - @last_write) > 0.2 || self.count >= max
+    if (now - @last_write) > 0.2 || @count >= max
       write
       @last_write = now
     end
@@ -73,8 +75,8 @@ class ProgressBar
 
   def to_s
     self.count = max if count > max
-    meters.inject("") do |text, meter|
-      text << render(meter) + " "
+    meters.inject(String.new) do |text, meter|
+      text << "#{render(meter)} "
     end.strip
   end
 
@@ -97,13 +99,11 @@ class ProgressBar
   end
 
   def render_bar
-    return '' if bar_width < 2
+    return "" if bar_width < 2
+
     progress_width = (ratio * (bar_width - 2)).floor
     remainder_width = bar_width - 2 - progress_width
-    "[" +
-      "#" * progress_width +
-      " " * remainder_width +
-    "]"
+    "[#{'#' * progress_width}#{' ' * remainder_width}]"
   end
 
   def render_counter
@@ -124,20 +124,17 @@ class ProgressBar
   end
 
   def render_rate
-    "[%#{max_width+3}.2f/s]" % rate
+    "[%#{max_width + 3}.2f/s]" % rate
   end
 
   def terminal_width
     # HighLine check takes a long time, so only update width every second.
-    if @terminal_width.nil? || @last_width_adjustment.nil? ||
-                               ::Time.now - @last_width_adjustment > 1
-
-      @last_width_adjustment = ::Time.now
-      @terminal_width = @hl.output_cols.to_i
-      if @terminal_width < 1
-        @terminal_width = 80
-      end
-      @terminal_width
+    now = ::Time.now
+    if now - @last_width_adjustment > 1
+      @last_width_adjustment = now
+      new_width = @hl.output_cols.to_i
+      new_width = 80 if new_width < 1
+      @terminal_width = new_width
     else
       @terminal_width
     end
@@ -148,12 +145,12 @@ class ProgressBar
   end
 
   def non_bar_width
-    meters.reject { |m| m == :bar }.inject(0) do |width, meter|
+    meters.reject { |meter| meter == :bar }.inject(0) do |width, meter|
       width += width_of(meter) + 1
     end
   end
 
-  def counter_width   # [  1/100]
+  def counter_width # [  1/100]
     max_width * 2 + 3
   end
 
@@ -181,14 +178,15 @@ class ProgressBar
     max.to_s.length
   end
 
+  HOUR = 3600
+  MINUTE = 60
   def format_interval(interval)
-    if interval > 3600
-      "%02i:%02i:%02i" % [interval/3600, interval%3600/60, interval%60]
+    if interval > HOUR
+      "%02i:%02i:%02i" % [interval / HOUR, interval % HOUR / MINUTE, interval % MINUTE]
     else
-      "%02i:%02i" % [interval/60, interval%60]
+      "%02i:%02i" % [interval / MINUTE, interval % MINUTE]
     end
   end
-
 end
 
-require_relative 'progress_bar/with_progress'
+require_relative "progress_bar/with_progress"

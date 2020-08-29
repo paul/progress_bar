@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-$:.push File.expand_path("lib", __dir__)
-require "progress_bar/version"
+require_relative "lib/progress_bar/version"
 
 Gem::Specification.new do |s|
   s.name        = "progress_bar"
@@ -14,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Simple Progress Bar for output to a terminal"
   s.description = "Give people feedback about long-running tasks without overloading them with information: Use a progress bar, like Curl or Wget!"
 
-  s.rubyforge_project = "progress_bar"
+  s.required_ruby_version = ">= 2.4.0"
 
   s.add_dependency("highline", [">= 1.6", "< 3"])
   s.add_dependency("options", "~> 2.3.0")
