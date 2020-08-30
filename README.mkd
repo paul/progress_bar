@@ -20,14 +20,16 @@ lots of progress bar alternatives, and we thank you for using ProgressBar!
 
 ## The Easy Way
 
+```ruby
+require 'progress_bar'
 
-    require 'progress_bar'
-    bar = ProgressBar.new
+bar = ProgressBar.new
 
-    100.times do
-      sleep 0.1
-      bar.increment!
-    end
+100.times do
+  sleep 0.1
+  bar.increment!
+end
+```
 
 Produces output like:
 
@@ -42,15 +44,43 @@ it.*
 Usually, the defaults should be fine, the only thing you'll need to
 tweak is the max.
 
-    bar = ProgressBar.new(1000)
+```ruby
+bar = ProgressBar.new(1000)
+```
 
 ## Larger Steps
 
 If you want to process several things, and update less often, you can
 pass a number to `#increment!`
 
+```ruby
     bar.increment! 42
+```
 
+## Printing additional output
+
+Sometimes you want to print some additional messages in the output, but since the ProgressBar uses terminal control characters to replace the text on the same line on every update, the output looks funny:
+
+    [#######################################                           ] [ 59.00%] [00:06]
+    Hello!
+    [#########################################                         ] [ 60.00%] [00:05]
+
+To prevent this, you can use `ProgressBar#puts` so ProgressBar knows you want to print something, and it'll clear the bar before printing, then resume printing on the next line:
+
+```ruby
+100.times do |i|
+  sleep 0.1
+  bar.puts "Halfway there!" if i == 50
+  bar.increment!
+end
+```
+
+Produces output like:
+
+    Halfway there!
+    [##################################] [100/100] [100%] [00:10] [00:00] [  9.98/s]
+
+Try it out in `examples/printing_messages.rb` to see how it looks.
 
 ## Picking the meters
 
@@ -58,7 +88,9 @@ By default, ProgressBar will use all available meters (this will
 probably change). To select which meters you want, and in which order,
 pass them to the constructor:
 
-    bar = ProgressBar.new(100, :bar, :rate, :eta)
+```ruby
+bar = ProgressBar.new(100, :bar, :rate, :eta)
+```
 
 
 ### Available Meters
