@@ -74,6 +74,8 @@ Style/HashSyntax:
     - lib/tasks/**/*.rake
 Style/NumericLiterals:
   Enabled: false
+Style/StringConcatenation:
+  Enabled: false
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
