@@ -36,9 +36,15 @@ class ProgressBar
     end
   end
 
-  def write
+  def puts(text)
     clear!
-    print to_s
+    $stderr.write(text)
+    $stderr.puts
+    write
+  end
+
+  def write
+    print "\r" + to_s
   end
 
   def remaining
@@ -87,7 +93,7 @@ class ProgressBar
   end
 
   def clear!
-    print "\r"
+    print "\r" + " " * terminal_width + "\r"
   end
 
   def render(meter)
