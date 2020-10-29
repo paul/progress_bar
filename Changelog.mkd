@@ -1,3 +1,11 @@
+# 1.3.2
+
+ * Added `ProgressBar#puts`, to be able to print text to the output without
+   interfering with the rendering of the bar output.
+   [#56](https://github.com/paul/progress_bar/pull/56) Thanks to
+   [TRex22](https://github.com/TRex22) for the suggestion in
+   [#44](https://github.com/paul/progress_bar/pull/44).
+
 # 1.3.1
 
  * Added support for passing bar options to `Enumerable#with_progress`
