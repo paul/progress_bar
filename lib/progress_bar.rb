@@ -24,7 +24,7 @@ class ProgressBar
 
     @hl = HighLine.new
     @terminal_width = 80
-    @last_width_adjustment = Time.at(0)
+    @last_width_adjustment = ::Time.at(0)
   end
 
   def increment!(count = 1)
