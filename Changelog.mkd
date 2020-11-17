@@ -1,3 +1,10 @@
+# 1.3.3
+
+ * Fixed use of unqualified ::Time that was conflicting with another
+   ProgressBar gem [#58](https://github.com/paul/progress_bar/pull/58).
+   Thanks to [harryloewen](https://github.com/harryloewen) for the
+   [report](https://github.com/paul/progress_bar/issues/57)
+
 # 1.3.2
 
  * Added `ProgressBar#puts`, to be able to print text to the output without
