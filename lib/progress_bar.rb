@@ -9,7 +9,7 @@ class ProgressBar
 
   attr_accessor :count, :max, :meters
 
-  def initialize(*args)
+  def initialize(*args, dest: nil)
     @count      = 0
     @max        = 100
     @meters     = [:bar, :counter, :percentage, :elapsed, :eta, :rate]
@@ -18,6 +18,7 @@ class ProgressBar
     raise ArgumentError, "Max must be a positive integer" unless @max >= 0
 
     @meters = args unless args.empty?
+    @dest = dest
 
     @last_write = ::Time.at(0)
     @start      = ::Time.now
@@ -30,16 +31,16 @@ class ProgressBar
   def increment!(count = 1)
     @count += count
     now = ::Time.now
-    if (now - @last_write) > 0.2 || @count >= max
-      write
-      @last_write = now
-    end
+    return unless (now - @last_write) > update_rate || @count >= max
+
+    write
+    @last_write = now
   end
 
   def puts(text)
     clear!
-    $stderr.write(text)
-    $stderr.puts
+    dest.write(text)
+    dest.puts
     write
   end
 
@@ -89,7 +90,7 @@ class ProgressBar
   protected
 
   def print(str)
-    $stderr.write str
+    dest.write str
   end
 
   def clear!
@@ -156,7 +157,8 @@ class ProgressBar
     end
   end
 
-  def counter_width # [  1/100]
+  # [  1/100]
+  def counter_width
     max_width * 2 + 3
   end
 
@@ -176,7 +178,8 @@ class ProgressBar
     format_interval(eta).length + 2
   end
 
-  def rate_width     # [ 23.45/s]
+  # [ 23.45/s]
+  def rate_width
     render_rate.length
   end
 
@@ -192,6 +195,16 @@ class ProgressBar
     else
       "%02i:%02i" % [interval / MINUTE, interval % MINUTE]
     end
+  end
+
+  def update_rate
+    # If we're printing to the console, update the bar at ~30fps
+    # Otherwise, assume its a long job, so print to the log once a minute
+    @update_rate ||= dest.tty? ? 1.0 / 30 : 60
+  end
+
+  def dest
+    @dest ||= $stderr.tty? ? $stderr : $stdout
   end
 end
 
