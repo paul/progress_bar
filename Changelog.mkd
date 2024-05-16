@@ -1,3 +1,7 @@
+# 1.3.4
+
+ * Relaxed highline gem requirement even further, to allow any 1.6+ version [#62](https://github.com/paul/progress_bar/pull/62)
+
 # 1.3.3
 
  * Fixed use of unqualified ::Time that was conflicting with another
