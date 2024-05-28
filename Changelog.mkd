@@ -1,3 +1,8 @@
+# 1.3.4
+
+ - Updated dependencies (#63)
+ - Relaxed highline gem requirement to allow 3.x (#62, Thanks to @dgholz)
+
 # 1.3.3
 
  * Fixed use of unqualified ::Time that was conflicting with another
