@@ -30,10 +30,10 @@ class ProgressBar
   def increment!(count = 1)
     @count += count
     now = ::Time.now
-    if (now - @last_write) > 0.2 || @count >= max
-      write
-      @last_write = now
-    end
+    return unless (now - @last_write) > 0.2 || @count >= max
+
+    write
+    @last_write = now
   end
 
   def puts(text)
@@ -93,7 +93,7 @@ class ProgressBar
   end
 
   def clear!
-    print "\r" + " " * terminal_width + "\r"
+    print "\r" + (" " * terminal_width) + "\r"
   end
 
   def render(meter)
@@ -152,12 +152,13 @@ class ProgressBar
 
   def non_bar_width
     meters.reject { |meter| meter == :bar }.inject(0) do |width, meter|
-      width += width_of(meter) + 1
+      width + width_of(meter) + 1
     end
   end
 
-  def counter_width # [  1/100]
-    max_width * 2 + 3
+  # [  1/100]
+  def counter_width
+    (max_width * 2) + 3
   end
 
   def percentage_width
@@ -176,7 +177,8 @@ class ProgressBar
     format_interval(eta).length + 2
   end
 
-  def rate_width     # [ 23.45/s]
+  # [ 23.45/s]
+  def rate_width
     render_rate.length
   end
 

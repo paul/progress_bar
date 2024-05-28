@@ -8,20 +8,19 @@ jobs:
     strategy:
       matrix:
         ruby:
-          - 2.4.x
-          - 2.5.x
-          - 2.6.x
-          - 2.7.x
+          - "2.7"
+          - "3.0"
+          - "3.1"
+          - "3.2"
+          - "3.3"
+          - "3.4"
+          - head
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-ruby@v1
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: Install dependencies
-        run: |
-          gem install bundler --no-document
-          bundle install
-
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - name: RSpec
         run: |
-          rspec
+          bundle exec rspec

@@ -30,7 +30,7 @@ describe ProgressBar::WithProgress do
 
     it "should give Enumerator" do
       enum = (1..20).each_with_progress
-      expect(enum).to be_kind_of(Enumerator)
+      expect(enum).to be_a(Enumerator)
       expect(bar.max).to eq 20
       expect(bar.count).to eq 0
 
