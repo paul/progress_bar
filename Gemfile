@@ -12,4 +12,6 @@ group :development, :test do
   gem "rubocop"
   gem "rubocop-rspec"
   gem "timecop"
+
+  gem "danger-rubocop", "~> 0.13.0"
 end
