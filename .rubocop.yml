@@ -23,7 +23,7 @@ Layout/HashAlignment:
   EnforcedColonStyle: table
 Lint/AmbiguousBlockAssociation:
   Exclude:
-    - "spec/**/*"  # `expect { }.to change { }` is fine
+    - "spec/**/*" # `expect { }.to change { }` is fine
 Lint/ShadowingOuterLocalVariable:
   # Shadowing outer local variables with block parameters is often useful to
   # not reinvent a new name for the same thing, it highlights the relation
@@ -37,7 +37,7 @@ Metrics/BlockLength:
     - Guardfile
     - shared_context
     - feature
-  ExcludedMethods:
+  AllowedMethods:
     - configure
     - context
     - define
@@ -83,8 +83,6 @@ Style/SymbolArray:
   MinSize: 4
 
 # Rspec
-Capybara/FeatureMethods:
-  Enabled: false
 RSpec/ContextWording:
   Enabled: false
 RSpec/DescribeClass:
