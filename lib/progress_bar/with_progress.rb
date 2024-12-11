@@ -3,7 +3,7 @@
 class ProgressBar
   module WithProgress
     def each_with_progress(*args, &block)
-      bar = ProgressBar.new(count, *args)
+      bar = ProgressBar.new(respond_to?(:size) && size || count, *args)
       if block
         each{ |obj| yield(obj).tap{ bar.increment! } }
       else
